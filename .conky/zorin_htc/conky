@@ -1,0 +1,175 @@
+-- conky for Zorin OS 17 by Daniel Hobbs
+-- Updated 06/12/23
+-- Conky settings
+
+conky.config = {
+
+background = false,
+update_interval = 5,
+
+double_buffer = true,
+no_buffers = true,
+
+-- Window specifications
+own_window = true,
+own_window_type = 'dock',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = '000000',
+own_window_argb_visual = true,
+own_window_argb_value = 255,
+own_window_transparent = true,
+draw_blended = false,
+
+minimum_width = 310,
+minimum_height = 1080,
+maximum_width = 310,
+
+-- Alignment
+alignment = 'top_right',
+gap_x = -20,
+gap_y = 20,
+
+border_inner_margin = 0,
+border_outer_margin = 0,
+
+-- Graphics settings
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+imlib_cache_size = 0,
+
+-- Text settings
+use_xft = true,
+xftalpha = 0.4,
+font = 'MaiandraGD:size=24',
+
+-- Color scheme
+default_color = '8b8b8b',
+
+color1 = '434343',
+color2 = '9933CC',
+color3 = '669900',
+color4 = 'FF8800',
+color5 = 'CC0000',
+-- color6 = 'EEEEEE',
+color6 = 'AAAAAA',
+color7 = 'DDDDDD',
+
+-------------------------------------
+--  API Key
+-------------------------------------
+template6="230e6827697cf6fddc7d47c66ecd20e3",
+
+
+-------------------------------------
+--  City ID
+-------------------------------------
+template7="2655262",
+
+
+-------------------------------------
+--  Temp Unit (default, metric, imperial)
+-------------------------------------
+template8="metric",
+
+
+-------------------------------------
+--  Locale (e.g. "es_ES.UTF-8")
+--  Leave empty for default
+-------------------------------------
+template9=""
+}
+
+conky.text = [[
+${execi 300 l=${template9}; l=${l%%_*}; curl -s "api.openweathermap.org/data/2.5/forecast/daily?APPID=${template6}&id=${template7}&cnt=5&units=${template8}&lang=$l" -o ~/.cache/forecast.json}\
+${execi 300 l=${template9}; l=${l%%_*}; curl -s "api.openweathermap.org/data/2.5/weather?APPID=${template6}&id=${template7}&cnt=5&units=${template8}&lang=$l" -o ~/.cache/weather.json}\
+\
+${image ~/.conky/zorin_htc/.images/base3.png -p 0,30 -s 260x145}\
+${image ~/.conky/zorin_htc/.images/base3.png -p 0,190 -s 260x45}\
+${image ~/.conky/zorin_htc/.images/flip_bg.png -p 30,10 -s 100x110}\
+${image ~/.conky/zorin_htc/.images/flip_bg.png -p 130,10 -s 100x110}\
+\
+${voffset 33}${font Helvetica LT Std :style=Condensed:size=60}${color1}${goto 41}${time %H}${goto 142}${time %M}${font}
+${voffset 15}${color whitesmoke}${font Helvetica LT Std :style=bold:size=9}${alignr 10}${time %a}, ${time %e} ${time %b}
+${voffset 15}${goto 10}${execi 3600 jq -r .name ~/.cache/weather.json}
+${voffset -20}${alignr 40}${execi 3600 date -d "@$(jq -r .dt ~/.cache/weather.json)" +%-I:%M\ %P}
+${voffset 10}${goto 132}${font :size=45}${execi 3600 jq -r .main.temp ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}°${font}
+${execi 3600 cp -f ~/.harmattan-assets/icons/#dcdcdc__64/$(jq .weather[0].id ~/.cache/weather.json).png ~/.cache/weather.png}${image ~/.cache/weather.png -p 5,120 -s 50x50}
+${voffset -80}${goto 55}${execi 3600 jq -r .weather[0].description ~/.cache/weather.json | sed "s|\<.|\U&|g"}
+${image ~/.conky/eos/images/wind.png -p 55,135 -s 15x15}${goto 77}${execi 3600 jq -r .wind.speed ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}${if_match "$template8" == "metric"} m/s${else}${if_match "$template8" == "default"} m/s${else}${if_match "$template8" == "imperial"} mi/h${endif}${endif}${endif}
+${image ~/.conky/eos/images/humidity.png -p 55,150 -s 15x15}${goto 77}${execi 3600 jq -r .main.humidity ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num} %
+${execi 3600 cp -f ~/.harmattan-assets/icons/#dcdcdc__32/$(jq .list[0].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-today.png}${image ~/.cache/weather-today.png -p 245,120 -s 25x25}${execi 3600 cp -f ~/.harmattan-assets/icons/#dcdcdc__32/$(jq .list[1].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-tomorrow.png}${image ~/.cache/weather-tomorrow.png -p 245,150 -s 25x25}
+${voffset -60}${goto 275}${execi 3600 LANG=${template9} LC_TIME=${template9} date +%^a}
+${voffset -5}${goto 275}${execi 3600 jq -r .list[0].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}° / ${execi 3600 jq -r .list[0].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°
+${voffset 6}${goto 275}${execi 3600 LANG=${template9} LC_TIME=${template9} date -d +1day +%^a}
+${voffset -5}${goto 275}${execi 3600 jq -r .list[1].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}° / ${execi 3600 jq -r .list[1].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°
+
+${font bold:size=12}${voffset 0}${goto 10}HARD DRIVES$font
+${voffset 4}${goto 20}ROOT ${alignr 50}${color7}${fs_bar 12,150 /}
+${voffset -17}${font :bold:size=8}${alignr 55}${color5}${fs_free /} free${color}${font}
+${voffset 4}${goto 20}DATA ${alignr 50}${color7}${fs_bar 12,150 /mnt/Data}
+${voffset -17}${font :bold:size=8}${alignr 55}${color5}${fs_free /mnt/Data} free${color}${font}
+${voffset 4}${goto 20}GAMES ${alignr 50}${color7}${fs_bar 12,150 /mnt/Games}
+${voffset -17}${font :bold:size=8}${alignr 55}${color5}${fs_free /mnt/Games} free${color}${font}
+${voffset 4}${goto 20}STEAM ${alignr 50}${color7}${fs_bar 12,150 /mnt/Steam}
+${voffset -17}${font :bold:size=8}${alignr 55}${color5}${fs_free /mnt/Steam} free${color}${font}
+${voffset 4}${goto 20}PLEX ${alignr 50}${color7}${fs_bar 12,150 /mnt/Plex}
+${voffset -17}${font :bold:size=8}${alignr 55}${color5}${fs_free /mnt/Plex} free${color}${font}
+${voffset 4}${goto 20}BACKUP ${alignr 50}${color7}${fs_bar 12,150 /mnt/Backups}
+${voffset -17}${font :bold:size=8}${alignr 55}${color5}${fs_free /mnt/Backups} free${color}${font}
+${voffset 4}
+${font bold:size=12}${goto 10}NETWORK$font
+${voffset 4}${goto 20}${color}Up:${color} ${color6}${upspeed 
+eno1}/s${color}${alignr 50}${color}Sent:${color} ${color6}${totalup eno1}${color}
+${voffset 0}${goto 20}${color}Down:${color} ${color6}${downspeed 
+eno1}/s${color}${alignr 50}${color}Received:${color} ${color6}${totaldown eno1}${color}
+${voffset 0}${goto 20}${color}External IP Address: ${color6}${alignr 50}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color}
+${voffset 0}${goto 20}Internal IP Address: ${color6}${alignr 50}${addr eno1}${color}
+
+${font bold:size=12}${voffset 0}${goto 
+10}PROCESSORS$font${color6}${alignr 55}${exec sensors | grep -A 2 'pch_cannonlake-virtual-0' | grep '°C' | cut -c 16-17}°C
+${color}${voffset 4}${goto 20}CPU1 ${alignr 50}${color7}${cpugraph cpu1 
+12,200}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${cpu cpu1}%${color}${font}
+${voffset 2}${goto 20}CPU2 ${alignr 20}${color7}${cpugraph cpu2 12,150}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${cpu cpu2}%${color}${font}
+${voffset 2}${goto 20}CPU3 ${alignr 20}${color7}${cpugraph cpu3 12,150}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${cpu cpu3}%${color}${font}
+${voffset 2}${goto 20}CPU4 ${alignr 20}${color7}${cpugraph cpu4 12,15}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${cpu cpu4}%${color}${font}
+${voffset 2}${goto 20}CPU5 ${alignr 20}${color7}${cpugraph cpu5 12,150}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${cpu cpu5}%${color}${font}
+${voffset 2}${goto 20}CPU6 ${alignr 20}${color7}${cpugraph cpu6 12,150}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${cpu cpu6}%${color}${font}
+${voffset 5}${goto 20}${top name 1}${alignr 50}${color6}${top cpu 1}%${color}
+${voffset 0}${goto 20}${top name 2}${alignr 50}${color6}${top cpu 2}%${color}
+${voffset 0}${goto 20}${top name 3}${alignr 50}${color6}${top cpu 3}%${color}
+${voffset 0}${goto 20}${top name 4}${alignr 50}${color6}${top cpu 4}%${color}
+${voffset 0}${goto 20}${top name 5}${alignr 50}${color6}${top cpu 5}%${color}
+
+${font bold:size=12}${voffset 0}${goto 10}MEMORY$font${voffset 4}
+${color}${voffset 4}${goto 20}RAM ${alignr 50}${color7}${membar 12,150}
+${voffset -18}${offset 5}${font :bold:size=8}${alignr 55}${color6}${mem}${color}${font}
+${voffset 5}${goto 20}${top_mem name 1}${alignr 50}${color6}${top_mem mem 1}%${color}
+${voffset 0}${goto 20}${top_mem name 2}${alignr 50}${color6}${top_mem mem 2}%${color}
+${voffset 0}${goto 20}${top_mem name 3}${alignr 50}${color6}${top_mem mem 3}%${color}
+${voffset 0}${goto 20}${top_mem name 4}${alignr 50}${color6}${top_mem mem 4}%${color}
+${voffset 0}${goto 20}${top_mem name 5}${alignr 50}${color6}${top_mem mem 5}%${color}
+${voffset 0}
+${font bold:size=12}${voffset 0}${goto 10}SYSTEM INFO${font}${voffset 4}
+${voffset 4}${goto 20}${exec cat /etc/issue.net} ${alignr 50}${exec cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-26}
+${voffset 0}${goto 20}${kernel} ${alignr 50} ${machine}
+${voffset 0}${goto 20}Uptime: ${color6}${uptime_short}${color} ${alignr 
+50}Gamemode: ${if_match "${exec gamemoded -s | awk '{print $3;}'}" == "active"}${color5} ON${else}${color6}OFF${endif}${color}
+${voffset 0}${goto 20}Processes: ${color6}${processes}${color}${alignr 
+50}Running: ${color6}${running_processes}${color}
+${voffset 0}${goto 20}Updates Available / ${color5}Security${color}: ${color6}${execi 4320 apt list --upgradable 2>&1 | wc -l | awk '{print $0-4}'} ${color} / ${color5} ${execi 4320 apt list --upgradable 2>&1 | grep "\-security" | wc -l}${color}
+${voffset 0}${goto 20}Fans: ${color6}${hwmon 4 fan 2}${color}  /  ${color6}${hwmon 4 fan 3}${color}  /  ${color6}${hwmon 4 fan 4}${color}  /  ${color6}${hwmon 4 fan 5}${color}  /  ${color6}${hwmon 4 fan 6}${color}
+
+${font bold:size=12}${voffset 0}${goto 10}GPU INFO$font${voffset 4}
+${color}${voffset 4}${goto 20}Card: ${color6}${exec nvidia-smi -q | grep "Product Name" | cut -c45-80}${color}
+${voffset 0}${goto 20}Driver: ${color6}${exec nvidia-smi -q | grep "Driver Version" | cut -c45-60}${color}
+${voffset 0}${goto 20}Temp: ${color6}${execi 300 nvidia-smi -q | grep "GPU Current Temp" | cut -c45-60}${color}${alignr 50}Fan: ${color6}${execi 300 nvidia-smi -q | grep "Fan Speed" | cut -c45-60}${color}
+${voffset 0}${goto 20}Utilization: GPU ${color6}${execi 300 nvidia-smi -q | grep "Gpu" | cut -c45-60}${color}${alignr 50}Mem ${color6}${execi 300 nvidia-smi -q | grep "Memory" | sed -e 's/Memory.*: //'| awk 'NR==3{print; }' | cut -c9-13}${color}
+]]

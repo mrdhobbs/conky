@@ -1,0 +1,82 @@
+<div id="feed-tabs">
+    <a href="http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259" class="arrow-left">Previous 5 Days<span></span></a>
+    <a href="http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=11" class="arrow-right">Next 5 Days<span></span></a>
+
+  <ul>
+    <li class="day current first cl { href: 'http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=6' }">
+    <div class="frame"></div>
+    <div class="bg bg-c">
+        <h3><a href="#">Fri</a></h3>
+        <h4>Aug 30</h4>
+        <div class="icon i-6-s "></div>
+        <div class="info">
+        <span class="cond">Turning cloudy</span>
+        <strong class="temp">24<span>&deg;</span></strong><span class="low"><span>Lo</span> 13<span>&deg;</span></span>
+        </div>
+        <!-- /.info -->
+    </div>
+    <!-- /.bg -->
+    </li>
+    <li class="day hv  cl { href: 'http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=7' }">
+    <div class="frame"></div>
+    <div class="bg bg-su">
+        <h3><a href="#">Sat</a></h3>
+        <h4>Aug 31</h4>
+        <div class="icon i-3-s "></div>
+        <div class="info">
+        <span class="cond">A shower in the morning</span>
+        <strong class="temp">22<span>&deg;</span></strong><span class="low"><span>Lo</span> 6<span>&deg;</span></span>
+        </div>
+        <!-- /.info -->
+        <a href="http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=7" class="bt-more">more</a>
+    </div>
+    <!-- /.bg -->
+    </li>
+    <li class="day hv  cl { href: 'http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=8' }">
+    <div class="frame"></div>
+    <div class="bg bg-su">
+        <h3><a href="#">Sun</a></h3>
+        <h4>Sep 1</h4>
+        <div class="icon i-3-s "></div>
+        <div class="info">
+        <span class="cond">Partly sunny and cooler</span>
+        <strong class="temp">16<span>&deg;</span></strong><span class="low"><span>Lo</span> 7<span>&deg;</span></span>
+        </div>
+        <!-- /.info -->
+        <a href="http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=8" class="bt-more">more</a>
+    </div>
+    <!-- /.bg -->
+    </li>
+    <li class="day hv  cl { href: 'http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=9' }">
+    <div class="frame"></div>
+    <div class="bg bg-c">
+        <h3><a href="#">Mon</a></h3>
+        <h4>Sep 2</h4>
+        <div class="icon i-6-s "></div>
+        <div class="info">
+        <span class="cond">Mainly cloudy</span>
+        <strong class="temp">17<span>&deg;</span></strong><span class="low"><span>Lo</span> 13<span>&deg;</span></span>
+        </div>
+        <!-- /.info -->
+        <a href="http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=9" class="bt-more">more</a>
+    </div>
+    <!-- /.bg -->
+    </li>
+    <li class="day hv last cl { href: 'http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=10' }">
+    <div class="frame"></div>
+    <div class="bg bg-r">
+        <h3><a href="#">Tue</a></h3>
+        <h4>Sep 3</h4>
+        <div class="icon i-18-s "></div>
+        <div class="info">
+        <span class="cond">Occasional rain</span>
+        <strong class="temp">22<span>&deg;</span></strong><span class="low"><span>Lo</span> 8<span>&deg;</span></span>
+        </div>
+        <!-- /.info -->
+        <a href="http://www.accuweather.com/en/gb/littlehampton/bn17-5/daily-weather-forecast/326259?day=10" class="bt-more">more</a>
+    </div>
+    <!-- /.bg -->
+    </li>
+  </ul>
+</div>
+<!-- /.feed-tabs -->

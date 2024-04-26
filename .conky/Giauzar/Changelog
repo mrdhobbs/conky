@@ -1,0 +1,31 @@
+Changelog
+--------------------------------------------------------
+Giauzar - Conky Theme
+[ Draco Themes Pack ] 
+
+by Closebox73
+
+Social
+X			: https://twitter.com/closebox73
+Discord		: https://discord.com/users/1115644269802311750
+Github		: https://github.com/closebox73
+Pling		: https://pling.com/u/closebox73x
+Mastodon	: https://mastodon.social/@closebox73
+--------------------------------------------------------
+
+
+v2.3
+date : 06 Feb 2024
+-	Add line draw_blended in conky config due transparent image issue in Gnome & KDE
+-	New weather.sh
+-	New weather-icon-text.sh
+-	Change main font from Finladica to be Barlow
+-	Add Playerctl version
+-	Add override_utf8_locale line
+-	Add License
+-	Some minor change
+
+
+v1.0
+date : 05 Aug 2021
+-	Initial release

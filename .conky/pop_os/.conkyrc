@@ -1,0 +1,305 @@
+conky.config = {
+
+-------------------------------------
+--  Generic Settings
+-------------------------------------
+background=true,
+update_interval=2,
+double_buffer=true,
+no_buffers=true,
+imlib_cache_size=10,
+
+draw_shades=false,
+draw_outline=false,
+draw_borders=false,
+draw_graph_borders=false,
+default_graph_height=26,
+default_graph_width=80,
+show_graph_scale=false,
+show_graph_range=false,
+
+
+-------------------------------------
+--  Window Specifications
+-------------------------------------
+gap_x=0,
+gap_y=30,
+minimum_height=1410,
+minimum_width=238,
+own_window=true,
+own_window_type="dock",
+own_window_transparent=false,
+own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
+border_inner_margin=0,
+border_outer_margin=0,
+alignment="top_right",
+own_window_argb_visual=true,
+own_window_argb_value=100,
+
+
+-------------------------------------
+--  Text Settings
+-------------------------------------
+use_xft=true,
+xftalpha=1,
+font="DejaVu Sans:size=8",
+text_buffer_size=256,
+override_utf8_locale=true,
+
+short_units=true,
+short_units=true,
+pad_percents=2,
+top_name_width=7,
+
+
+-------------------------------------
+--  Color Scheme
+-------------------------------------
+default_color="FFFFFF",
+color1="FFFFFF",
+color2="FFFFFF",
+color3="FFFFFF",
+color4="FFFFFF",
+-- color5="8ABF5C",
+-- color5="CE3A3A",
+color5="00BFFF",
+color6="AAAAAA",
+color7="FFFFFF",
+color8="C83B3B",
+
+
+-------------------------------------
+--  API Key
+-------------------------------------
+template6="230e6827697cf6fddc7d47c66ecd20e3",
+
+
+-------------------------------------
+--  City ID
+-------------------------------------
+template7="2655831",
+
+
+-------------------------------------
+--  Temp Unit (default, metric, imperial)
+-------------------------------------
+template8="metric",
+
+
+-------------------------------------
+--  Locale (e.g. "es_ES.UTF-8")
+--  Leave empty for default
+-------------------------------------
+template9=""
+
+}
+
+
+---------------------------------------------------
+---------------------------------------------------
+
+
+conky.text = [[
+\
+\
+${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/get_weather ${template6} ${template7} ${template8} ${template9}}\
+\
+\
+# Background images
+\
+${image ~/.conky/pop_os/images/top-bg.png -p 5,5 -s 228x61}\
+${image ~/.conky/pop_os/images/fav-color.png -p 5,66 -s 228x86}\
+${image ~/.conky/pop_os/images/bg-1.png -p 5,152 -s 228x86}\
+${image ~/.conky/pop_os/images/bg-2.png -p 5,238 -s 228x105}\
+${image ~/.conky/pop_os/images/bg-3.png -p 5,343 -s 228x110}\
+${image ~/.conky/pop_os/images/bg-4.png -p 5,453 -s 228x30}\
+${image ~/.conky/pop_os/images/bottom-bg.png -p 5,483 -s 228x99}\
+${image ~/.conky/pop_os/images/bg-5.png -p 5,468 -s 228x16}\
+${image ~/.conky/pop_os/images/bg-4.png -p 5,582 -s 228x14}\
+${image ~/.conky/pop_os/images/bg-3.png -p 5,596 -s 228x110}\
+${image ~/.conky/pop_os/images/bg-5.png -p 5,581 -s 228x16}\
+${image ~/.conky/pop_os/images/top-bg.png -p 5,706 -s 228x61}\
+${image ~/.conky/pop_os/images/bg-2.png -p 5,767 -s 228x105}\
+${image ~/.conky/pop_os/images/bottom-bg.png -p 5,872 -s 228x99}\
+${image ~/.conky/pop_os/images/bg-4.png -p 5,971 -s 228x30}\
+${image ~/.conky/pop_os/images/separator-v.png -p 80,160 -s 1x76}\
+${image ~/.conky/pop_os/images/separator-v.png -p 157,160 -s 1x76}\
+${image ~/.conky/pop_os/images/separator-h.png -p 6,344 -s 226x1}\
+${image ~/.conky/pop_os/images/separator-h.png -p 6,244 -s 226x1}\
+${image ~/.conky/pop_os/images/separator-h.png -p 6,695 -s 226x1}\
+${image ~/.conky/pop_os/images/separator-h.png -p 6,771 -s 226x1}\
+${image ~/.conky/pop_os/images/separator-h.png -p 6,891 -s 226x1}\
+${image ~/.conky/pop_os/images/separator-h.png -p 6,970 -s 226x1}\
+\
+\
+# 3-day titles
+\
+${color3}${voffset 160}${alignc 77}${execi 300 LANG=${template9} LC_TIME=${template9} date +%^a}${color}
+${color3}${voffset -13}${alignc}${execi 300 LANG=${template9} LC_TIME=${template9} date -d +1day +%^a}${color}
+${color3}${voffset -13}${alignc -77}${execi 300 LANG=${template9} LC_TIME=${template9} date -d +2day +%^a}${color}
+\
+\
+# 3-day forecast
+\
+${color2}${voffset 45}${alignc 77}${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'avg' '.main.temp_min' '0'}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif} / ${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'avg' '.main.temp_max' '0'}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${color}
+${color2}${voffset -14}${alignc}${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'avg' '.main.temp_min' '1'}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif} / ${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'avg' '.main.temp_max' '1'}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${color}
+${color2}${voffset -14}${alignc -77}${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'avg' '.main.temp_min' '2'}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif} / ${execi 300 ~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'avg' '.main.temp_max' '2'}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${color}
+\
+\
+# Current Weather
+\
+${execi 300 cp -f ~/.conky/Harmattan-master/.harmattan-assets/photos/smallest/$(jq -r .weather[0].id ~/.cache/harmattan-conky/weather.json).png ~/.cache/harmattan-conky/weather-desc.png}${image ~/.cache/harmattan-conky/weather-desc.png -p 5,66 -s 228x86}\
+${goto 26}${voffset -160}${font DejaVu Sans:size=36}${color1}${execi 300 jq -r .main.temp ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num}${if_match "$template8" == "metric"}°C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${font}${color}
+${goto 26}${voffset 5}${font DejaVu Sans:size=12}${color1}${execi 300 jq -r .weather[0].description ~/.cache/harmattan-conky/weather.json | sed "s|\<.|\U&|g"}${font}${color}
+${color1}${alignr 52}${voffset -60}${execi 300 jq -r .main.pressure ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num} hPa
+${color1}${alignr 52}${voffset 7}${execi 300 jq -r .main.humidity ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num} %${color}
+${color1}${alignr 52}${voffset 7}${execi 300 jq -r .wind.speed ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num}${if_match "$template8" == "metric"} m/s${else}${if_match "$template8" == "default"} m/s${else}${if_match "$template8" == "imperial"} mi/h${endif}${endif}${endif}${color}
+\
+\
+# Time & date
+\
+${voffset -125}${font DejaVu Sans:size=22}${alignc}${color2}${time %H:%M}${font}${color}
+${voffset 4}${font DejaVu Sans:size=10}${alignc}${color6}${execi 300 LANG=${template9} LC_TIME=${template9} date +"%A, %B %-d"}${font}${color}
+\
+\
+# System Info
+\
+${voffset 289}${goto 20}${color2}${execi 10000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-26}${alignr 20}${exec sensors | grep 'Package id 0' | cut -c17-18 | sed '/^$/d'}°C${color}
+${voffset 4}${goto 20}${color5}CPU:${color}
+${voffset 4}${goto 20}${color5}GHz:${color}
+${voffset 4}${goto 20}${color5}Mem:${color}
+${voffset 4}${goto 20}${color5}Uptime:${color}
+${voffset 4}${goto 20}${color5}Game Mode:${color}
+${voffset 4}${goto 20}${color5}${execi 10000 cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | cut -d= -f2 | tr -d '"'}${color}
+${voffset -98}${goto 62}${color6}${cpu cpu0}%${goto 92}${cpu cpu1}%${goto 122}${cpu cpu2}%${goto 152}${cpu cpu3}%${goto 182}${cpu cpu4}%${goto 212}${cpu cpu5}%${color}
+${voffset 4}${goto 55}${color6}${exec awk '/cpu MHz/{i++}i==1{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 85}${color6}${exec awk '/cpu MHz/{i++}i==2{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 115}${color6}${exec awk '/cpu MHz/{i++}i==3{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 145}${color6}${exec awk '/cpu MHz/{i++}i==4{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 175}${color6}${exec awk '/cpu MHz/{i++}i==5{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 205}${color6}${exec awk '/cpu MHz/{i++}i==6{printf "%.f",$4; exit}' /proc/cpuinfo}${color}
+${voffset 4}${alignr 20}${color6}${memperc}%${color}
+${voffset 4}${alignr 20}${color6}${uptime_short}${color}
+${voffset 4}${alignr 20}${color6}${exec gamemoded -s |awk '{if($3 =="active") print "On"; else if($3 =="inactive") print "Off"}'}${color}
+${voffset 15}${alignr 20}${color6}${kernel}${color}
+${voffset -74}${alignc}${color2}${membar 8,100}${color}
+\
+\
+# Memory
+\
+${voffset 72}${goto 20}${color5}${top_mem name 1}${color}
+${voffset 3}${goto 20}${color5}${top_mem name 2}${color}
+${voffset 3}${goto 20}${color5}${top_mem name 3}${color}
+${voffset 3}${goto 20}${color5}${top_mem name 4}${color}
+${voffset 3}${goto 20}${color5}${top_mem name 5}${color}
+${voffset -77}${alignc}${color2}${top_mem mem 1}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 2}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 3}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 4}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 5}%${color}
+${voffset -77}${alignr 20}${color6}${top_mem mem_res 1}${color}
+${voffset 3}${alignr 20}${color6}${top_mem mem_res 2}${color}
+${voffset 3}${alignr 20}${color6}${top_mem mem_res 3}${color}
+${voffset 3}${alignr 20}${color6}${top_mem mem_res 4}${color}
+${voffset 3}${alignr 20}${color6}${top_mem mem_res 5}${color}
+${voffset -100}${goto 20}${color1}Proc${color}
+${voffset -13}${alignc}${color1}Mem%${color}
+${voffset -13}${alignr 20}${color1}Mem${color}
+\
+\
+# CPU
+\
+${voffset 126}${goto 20}${color5}${top name 1}${color}
+${voffset 3}${goto 20}${color5}${top name 2}${color}
+${voffset 3}${goto 20}${color5}${top name 3}${color}
+${voffset 3}${goto 20}${color5}${top name 4}${color}
+${voffset 3}${goto 20}${color5}${top name 5}${color}
+${voffset -77}${alignc}${color2}${top cpu 1}%${color}
+${voffset 3}${alignc}${color2}${top cpu 2}%${color}
+${voffset 3}${alignc}${color2}${top cpu 3}%${color}
+${voffset 3}${alignc}${color2}${top cpu 4}%${color}
+${voffset 3}${alignc}${color2}${top cpu 5}%${color}
+${voffset -77}${alignr 20}${color6}${top time 1}${color}
+${voffset 3}${alignr 20}${color6}${top time 2}${color}
+${voffset 3}${alignr 20}${color6}${top time 3}${color}
+${voffset 3}${alignr 20}${color6}${top time 4}${color}
+${voffset 3}${alignr 20}${color6}${top time 5}${color}
+${voffset -103}${goto 20}${color1}Proc${color}
+${voffset -13}${alignc}${color1}CPU%${color}
+${voffset -13}${alignr 20}${color1}Time${color}
+\
+\
+# Drives
+\
+${voffset 110}${goto 20}${color5}Root ${alignr 20}${color}${fs_bar 12,140 /}
+${voffset -14}${alignr 25}${color6}${fs_free /} free${color}
+${voffset 7}${goto 20}${color5}Data ${alignr 20}${color}${fs_bar 12,140 /mnt/Data}
+${voffset -14}${alignr 25}${color6}${fs_free /mnt/Data} free${color}
+${voffset 7}${goto 20}${color5}Games ${alignr 20}${color}${fs_bar 12,140 /mnt/Games}
+${voffset -14}${alignr 25}${color6}${fs_free /mnt/Games} free${color}
+${voffset 7}${goto 20}${color5}Steam ${alignr 20}${color}${fs_bar 12,140 /mnt/Steam}
+${voffset -14}${alignr 25}${color6}${fs_free /mnt/Steam} free${color}
+${voffset 7}${goto 20}${color5}Plex ${alignr 20}${color}${fs_bar 12,140 /mnt/Plex}
+${voffset -14}${alignr 25}${color6}${fs_free /mnt/Plex} free${color}
+${voffset 7}${goto 20}${color5}Backups ${alignr 20}${color}${fs_bar 12,140 /mnt/Backups}
+${voffset -14}${alignr 25}${color6}${fs_free /mnt/Backups} free${color}
+\
+\
+# GPU
+\
+${voffset 25}${goto 20}${color2}${execi 10000 nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}${alignr 20}${execi 10000 nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits}${color}
+${voffset 4}${goto 20}${color5}GPU Temp:${color}
+${voffset 4}${goto 20}${color5}Fan Speed:${color}
+${voffset 4}${goto 20}${color5}GPU Clock:${color}
+${voffset 4}${goto 20}${color5}Mem Clock:${color}
+${voffset 4}${goto 20}${color5}Mem Used:${color}
+${voffset -80}${alignr 20}${color6}${nvidia temp} °C${color}
+${voffset 4}${alignr 20}${color6}${execi 5 nvidia-settings -q [fan:0]/GPUCurrentFanSpeed -t} %${color}
+${voffset 4}${alignr 20}${color6}${nvidia gpufreq} MHz${color}
+${voffset 4}${alignr 20}${color6}${nvidia memfreq} MHz${color}
+${voffset 4}${alignr 20}${color6}${execi 5 nvidia-settings -q [gpu:0]/UsedDedicatedGPUMemory -t} / ${exec nvidia-settings -q [gpu:0]/TotalDedicatedGPUMemory -t} MiB${color}
+\
+\
+# Spotify
+\
+#${if_running spotify}
+#${voffset 5}${goto 20}${color2}Spotify ${color6}(${execi 10 ~/.conky/conky-spotify/scripts/status.sh})${color}
+#${voffset 5}${goto 20}${color5}Title:${alignr 20}${color6}${execi 10 ~/.conky/conky-spotify/scripts/title.sh}${color}
+#${voffset 5}${goto 20}${color5}Artist:${alignr 20}${color6}${execi 10 ~/.conky/conky-spotify/scripts/artist.sh}${color}
+#${voffset 5}${goto 20}${color5}Album:${alignr 20}${color6}${execi 10 ~/.conky/conky-spotify/scripts/album.sh}${color}
+#${else}
+#${voffset -5}${goto 20}${color2}Spotify ${color6}(Offline)${color}
+#${image ~/.conky/pop_os/images/spotify_icon.png -p 90,846 -s 48x50}
+#${endif}
+\
+\
+# Volume
+\
+${voffset 14}${goto 20}${color5}Volume:${alignr 20}${color6}${pa_sink_volume}%${color}
+\
+\
+# Network
+\
+${if_existing /proc/net/route eno1}
+${voffset -715}${goto 20}${color5}Up: ${color2}${upspeed eno1}${color5}${goto 145}Down: ${color2}${downspeed eno1}
+${voffset 2}${goto 20}${upspeedgraph eno1 22,80 FFFFFF FFFFFF}${goto 145}${downspeedgraph eno1 22,80 FFFFFF FFFFFF}
+${voffset 2}${goto 20}${color5}Sent: ${color2}${totalup eno1}${color5}${goto 145}Received: ${color2}${totaldown eno1}
+${voffset 3}${goto 20}${color5}Ext: ${color2}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color5}${goto 145}Int: ${color2}${addr eno1}${color}
+${else}
+${if_existing /proc/net/route wlx503eaaa240cb}
+${voffset -755}${goto 20}${color5}Up: ${color2}${upspeed wlx503eaaa240cb}${color5}${goto 145}Down: ${color2}${downspeed wlx503eaaa240cb}
+${voffset 2}${goto 20}${upspeedgraph wlx503eaaa240cb 22,80 FFFFFF FFFFFF}${goto 145}${downspeedgraph wlx503eaaa240cb 22,80 FFFFFF FFFFFF}
+${voffset 2}${goto 20}${color5}Sent: ${color2}${totalup wlx503eaaa240cb}${color5}${goto 145}Received: ${color2}${totaldown wlx503eaaa240cb}
+${voffset 3}${goto 20}${color5}Ext: ${color2}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color5}${goto 145}Int: ${color2}${addr wlx503eaaa240cb}${color}
+${else}
+${voffset -735}${goto 20}${color8}Network disconnected${color}
+${image ~/.conky/pop_os/images/offline.png -p 34,264 -s 16x16}
+${endif}
+${endif}
+\
+\
+\
+\
+${image ~/.conky/pop_os/images/pressure.png -p 209,75 -s 16x16}\
+${image ~/.conky/pop_os/images/humidity.png -p 209,95 -s 16x16}\
+${image ~/.conky/pop_os/images/wind.png -p 209,117 -s 16x16}\
+${execi 300 cp -f ~/.conky/Harmattan-master/.harmattan-assets/icons/#fff__32/$(~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'first' '.weather[0].id' '0').png ~/.cache/harmattan-conky/weather-1.png}${image ~/.cache/harmattan-conky/weather-1.png -p 26,182 -s 32x32}\
+${execi 300 cp -f ~/.conky/Harmattan-master/.harmattan-assets/icons/#fff__32/$(~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'first' '.weather[0].id' '1').png ~/.cache/harmattan-conky/weather-2.png}${image ~/.cache/harmattan-conky/weather-2.png -p 104,182 -s 32x32}\
+${execi 300 cp -f ~/.conky/Harmattan-master/.harmattan-assets/icons/#fff__32/$(~/.conky/Harmattan-master/.harmattan-assets/parse_weather 'first' '.weather[0].id' '2').png ~/.cache/harmattan-conky/weather-3.png}${image ~/.cache/harmattan-conky/weather-3.png -p 181,182 -s 32x32}${font}${voffset -120}\
+
+]]

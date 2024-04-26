@@ -1,0 +1,49 @@
+conky.config = {
+-- conky package by qaisar nawaz
+-- Conky settings
+background = false,
+update_interval = 30,
+double_buffer = true,
+no_buffers = true,
+
+-- Window specifications
+own_window = true,
+own_window_type = 'normal',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+own_window_argb_visual = true,
+own_window_argb_value = 100,
+
+minimum_width = 253,
+maximum_width = 253,
+
+-- Alignment
+alignment = 'top_right',
+gap_x = -1920,
+gap_y = 5,
+
+border_inner_margin = 15,
+border_outer_margin = 0,
+
+-- Graphics settings
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+
+-- Text settings
+use_xft = true,
+xftalpha = 0,
+font = 'Ubuntu:size=11',
+
+-- Color scheme
+default_color = 'FFFFFF',
+
+color1 = '006400'
+}
+
+conky.text = [[
+${voffset -10}${offset 46}${font Ubuntu:pixelsize=60}${time %I:%M}${font Ubuntu:pixelsize=14}${time %P}$font
+${voffset 5}${color1}${hr}${color}
+${alignc}${time %A} $font${color1}${time %d}$color ${time  %B} ${time %Y}$font${voffset -30}
+]]

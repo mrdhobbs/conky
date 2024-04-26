@@ -1,0 +1,8 @@
+sleep 20s
+killall conky
+cd "/home/daniel/.conky/myTransparentTiles"
+conky -c "/home/daniel/.conky/myTransparentTiles/time" &
+conky -c "/home/daniel/.conky/myTransparentTiles/weather" &
+conky -c "/home/daniel/.conky/myTransparentTiles/processorstat" &
+conky -c "/home/daniel/.conky/myTransparentTiles/systemstat" &
+

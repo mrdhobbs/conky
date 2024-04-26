@@ -1,0 +1,77 @@
+conky.config = {
+-- conky package by qaisar nawaz
+-- Conky settings #
+	background = false,
+	update_interval = 5,
+	double_buffer = true,
+	no_buffers = true,
+
+-- Window specifications #
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	own_window_title = '',
+	own_window_colour = 'black',
+	own_window_argb_visual = true,
+	own_window_argb_value = 100,
+
+	minimum_width = 253, minimum_height = 114,
+	maximum_width = 253,
+
+-- Alignment #
+	alignment = 'top_right',
+	gap_x = -1920,
+	gap_y = 531,
+
+	border_inner_margin = 15,
+	border_outer_margin = 0,
+
+-- Graphics settings #
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = true,
+
+-- Text settings #
+	use_xft = true,
+	xftalpha = 0,
+	font = 'Open Sans Light:size=9',
+
+-- Color scheme #
+--default_color 333333
+	default_color = '#FFFFFF',
+
+	color1 = '#bebebe',
+	color2 = '#444444',
+	color3 = '#669900',
+	color4 = '#333333',
+--color5 83a364
+	color5 = '#006400',
+
+
+};
+
+conky.text = [[
+${voffset -2}${font Open Sans Light:bold:size=9}PROCESSORS$font${color5}${alignr}${hwmon temp 2}°C${voffset 10}
+${color}CPU1 ${alignr}${color5}${cpugraph cpu1 12,200}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${cpu cpu1}%${color}${font}
+CPU2 ${alignr}${color5}${cpugraph cpu2 12,200}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${cpu cpu2}%${color}${font}
+CPU3 ${alignr}${color5}${cpugraph cpu3 12,200}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${cpu cpu3}%${color}${font}
+CPU4 ${alignr}${color5}${cpugraph cpu4 12,200}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${cpu cpu4}%${color}${font}
+${voffset 5}${top name 1}${alignr 5}${top cpu 1}%
+${top name 2}${alignr 5}${top cpu 2}%
+${top name 2}${alignr 5}${top cpu 3}%
+${voffset -8}
+${font Open Sans Light:bold:size=9}MEMORY$font${voffset 4}
+${color}RAM ${alignr}${color5}${membar 12,200}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${mem}%${color}${font}
+SWAP ${alignr}${color5}${swapbar 12,200}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${swap}%${color}${font}
+${voffset 5}${top_mem name 1}${alignr 5}${top_mem mem 1}%
+${top_mem name 2}${alignr 5}${top_mem mem 2}%
+${top_mem name 3}${alignr 5}${top_mem mem 3}%
+${voffset -110}
+]];

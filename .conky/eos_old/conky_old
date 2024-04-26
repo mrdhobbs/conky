@@ -1,0 +1,119 @@
+conky.config = {
+-- conky for Deepin Linux by Daniel Hobbs
+-- Conky settings
+background = false,
+update_interval = 5,
+
+double_buffer = true,
+no_buffers = true,
+
+-- Window specifications
+own_window = true,
+own_window_type = 'normal',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+own_window_argb_visual = true,
+own_window_transparent = false,
+
+minimum_width = 361,
+minimum_height = 1080,
+maximum_width = 361,
+
+-- Alignment
+alignment = 'top_right',
+gap_x = 0,
+gap_y = 0,
+
+border_inner_margin = 0,
+border_outer_margin = 0,
+
+-- Graphics settings
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+
+-- Text settings
+use_xft = true,
+xftalpha = 0,
+font = 'Droid Sans Fallback:size=10',
+
+-- Color scheme
+default_color = 'FFFFFF',
+
+color1 = '006400',
+color2 = '9933CC',
+color3 = '669900',
+color4 = 'FF8800',
+color5 = 'CC0000',
+color6 = 'AAAAAA',
+color7 = 'DDDDDD'
+}
+
+conky.text = [[
+${image /mnt/Data/.conky/Deepin/background.png}
+${voffset -10}${goto 100}${font Droid Sans Fallback:size=50}${time %I:%M}${font Droid Sans Fallback:size=14}${time %P}$font
+${voffset 10}${alignc}${time %A} ${time %d} ${time  %B} ${time %Y}${voffset 50}
+${execi 3600 curl -s "http://xml.weather.yahoo.com/forecastrss?w=13151&u=c" -o ~/.cache/weather.xml}${goto 20}${font Droid Sans Fallback:size=15}${execi 3600 grep "yweather:location" ~/.cache/weather.xml | grep -o "city=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}
+${voffset -25}${alignr 10}${execi 3600 grep "yweather:condition" ~/.cache/weather.xml | grep -o "date=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | cut -c17-25}
+${voffset -5}${goto 170}${font Droid Sans Fallback:size=50}${execi 3600 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}°${font}${voffset -30}
+${execi 3600 cp -f /home/daniel/.conky/Deepin/conky_icons/$(grep "yweather:condition" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*").png ~/.cache/weather.png}${image ~/.cache/weather.png -p 10,180 -s 60x60}
+${voffset -45}${goto 80}${execi 3600 grep "yweather:condition" ~/.cache/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]'}
+${image /home/daniel/.conky/Deepin/conky_icons/wind.png -p 80,200 -s 15x15}${goto 100}${execi 3600 echo "`grep \"yweather:wind\" ~/.cache/weather.xml | grep -o \"speed=\\\"[^\\\"]*\\\"\" | grep -o \"\\\"[^\\\"]*\\\"\" | grep -o \"[^\\\"]*\"` *0.62" | bc}mph
+${image /home/daniel/.conky/Deepin/conky_icons/humidity.png -p 80,218 -s 15x15}${goto 100}${execi 3600 grep "yweather:atmosphere" ~/.cache/weather.xml | grep -o "humidity=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}%
+${execi 3600 cp -f /home/daniel/.conky/Deepin/conky_icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1').png ~/.cache/weather-today.png}${image ~/.cache/weather-today.png -p 270,178 -s 30x30}${execi 3600 cp -f /home/daniel/.conky/Deepin/conky_icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2').png ~/.cache/weather-tomorrow.png}${image ~/.cache/weather-tomorrow.png -p 270,210 -s 30x30}${voffset -75}
+${goto 310}${execi 3600 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1' | tr '[a-z]' '[A-Z]'}
+${voffset -5}${goto 310}${execi 3600 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}° / ${execi 3600 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°
+${voffset 5}${goto 310}${execi 3600 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2' | tr '[a-z]' '[A-Z]'}
+${voffset -5}${goto 310}${execi 3600 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}° / ${execi 3600 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°
+
+${font Droid Sans Fallback:bold:size=12}${voffset 0}${goto 10}HARD DRIVES$font
+${goto 20}ROOT ${alignr 20}${color7}${fs_bar 12,220 /}
+${voffset -20}${font :bold:size=8}${alignr 25}${color6}${fs_free /} free${color}${font}
+${voffset 0}${goto 20}DATA ${alignr 20}${color7}${fs_bar 12,220 /mnt/Data}
+${voffset -20}${font :bold:size=8}${alignr 25}${color6}${fs_free /mnt/Data} free${color}${font}
+${voffset 0}${goto 20}TOSHIBA ${alignr 20}${color7}${fs_bar 12,220 /mnt/Toshiba}
+${voffset -20}${font :bold:size=8}${alignr 25}${color6}${fs_free /mnt/Toshiba} free${color}${font}
+${voffset 0}
+${font Droid Sans Fallback:bold:size=12}${goto 10}NETWORK$font
+${goto 20}${color}Up:${color} ${color6}${upspeed enp3s0}/s${color}${alignr 20}${color}Sent:${color} ${color6}${totalup enp3s0}${color}
+${voffset 0}${goto 20}${color}Down:${color} ${color6}${downspeed enp3s0}/s${color}${alignr 20}${color}Received:${color} ${color6}${totaldown enp3s0}${color}
+${voffset 0}${goto 20}${color}External IP Address: ${color6}${alignr 20}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color}
+${voffset 0}${goto 20}Internal IP Address: ${color6}${alignr 20}${addr enp3s0}${color}
+
+${font Droid Sans Fallback:bold:size=12}${voffset 0}${goto 10}PROCESSORS$font${color6}${alignr 25}${hwmon 1 temp 1}°C
+${color}${goto 20}CPU1 ${alignr 20}${color7}${cpugraph cpu1 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu1}%${color}${font}
+${voffset 0}${goto 20}CPU2 ${alignr 20}${color7}${cpugraph cpu2 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu2}%${color}${font}
+${voffset 0}${goto 20}CPU3 ${alignr 20}${color7}${cpugraph cpu3 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu3}%${color}${font}
+${voffset 0}${goto 20}CPU4 ${alignr 20}${color7}${cpugraph cpu4 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu4}%${color}${font}
+${voffset 5}${goto 20}${top name 1}${alignr 20}${top cpu 1}%
+${voffset 0}${goto 20}${top name 2}${alignr 20}${top cpu 2}%
+${voffset 0}${goto 20}${top name 3}${alignr 20}${top cpu 3}%
+${voffset 0}${goto 20}${top name 4}${alignr 20}${top cpu 4}%
+${voffset 0}${goto 20}${top name 5}${alignr 20}${top cpu 5}%
+
+${font Droid Sans Fallback:bold:size=12}${voffset 0}${goto 10}MEMORY$font${voffset 4}
+${color}${goto 20}RAM ${alignr 20}${color7}${membar 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${mem}${color}${font}
+${voffset 0}${goto 20}SWAP ${alignr 20}${color7}${swapbar 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${swap}${color}${font}
+${voffset 5}${goto 20}${top_mem name 1}${alignr 20}${top_mem mem 1}%
+${voffset 0}${goto 20}${top_mem name 2}${alignr 20}${top_mem mem 2}%
+${voffset 0}${goto 20}${top_mem name 3}${alignr 20}${top_mem mem 3}%
+${voffset 0}${goto 20}${top_mem name 4}${alignr 20}${top_mem mem 4}%
+${voffset 0}${goto 20}${top_mem name 5}${alignr 20}${top_mem mem 5}%
+${voffset 0}
+${font Droid Sans Fallback:bold:size=12}${voffset 0}${goto 10}SYSTEM INFO${font}${voffset 4}
+${goto 20}${exec cat /etc/issue.net} ${alignr 20}${exec cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-26}
+${voffset 0}${goto 20}${kernel} ${alignr 20} ${machine}
+${voffset 0}${goto 20}Uptime: ${color6}${uptime_short}${color}
+${voffset 0}${goto 20}Processes: ${color6}${processes}${color}${alignr 20}Running: ${color6}${running_processes}${color}
+
+${goto 20}Graphics card: ${color6}${exec nvidia-smi -q | grep "Product Name" | cut -c39-70}${color}
+${voffset 0}${goto 20}Graphics driver: ${color6}${exec nvidia-smi -q | grep "Driver Version" | cut -c39-50}${color}
+${voffset 0}${goto 20}Graphics temp: ${color6}${execi 300 nvidia-smi -q | grep "GPU Current Temp" | cut -c39-45}${color}
+]]

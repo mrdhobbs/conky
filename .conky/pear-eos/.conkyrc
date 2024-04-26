@@ -1,0 +1,274 @@
+conky.config = {
+
+-------------------------------------
+--  Generic Settings
+-------------------------------------
+background=false,
+update_interval=2,
+double_buffer=true,
+no_buffers=true,
+imlib_cache_size=10,
+
+draw_shades=false,
+draw_outline=false,
+draw_borders=false,
+draw_graph_borders=false,
+default_graph_height=26,
+default_graph_width=80,
+show_graph_scale=false,
+show_graph_range=false,
+
+
+-------------------------------------
+--  Window Specifications
+-------------------------------------
+gap_x=-1910,
+gap_y=10,
+minimum_height=250,
+minimum_width=200,
+own_window=true,
+own_window_type="normal",
+own_window_transparent=true,
+own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
+border_inner_margin=0,
+border_outer_margin=0,
+alignment="top_right",
+own_window_argb_visual=true,
+own_window_argb_value=150,
+
+
+-------------------------------------
+--  Text Settings
+-------------------------------------
+use_xft=true,
+xftalpha=0.5,
+font="caviar dreams:size=8",
+text_buffer_size=2048,
+override_utf8_locale=true,
+
+short_units=true,
+short_units=true,
+pad_percents=2,
+top_name_width=7,
+
+lua_load="~/.conky/pear-eos/clock_rings.lua",
+lua_draw_hook_pre="clock_rings",
+
+
+-------------------------------------
+--  Color Scheme
+-------------------------------------
+default_color="FFFFFF",
+color1="FFFFFF",
+color2="FFFFFF",
+color3="FFFFFF",
+color4="FFFFFF",
+-- color5="8ABF5C",
+-- color5="CE3A3A",
+color5="00BFFF",
+color6="AAAAAA",
+color7="FFFFFF",
+color8="C83B3B",
+
+
+-------------------------------------
+--  API Key
+-------------------------------------
+template6="230e6827697cf6fddc7d47c66ecd20e3",
+
+
+-------------------------------------
+--  City ID
+-------------------------------------
+template7="2655831",
+
+
+-------------------------------------
+--  Temp Unit (default, metric, imperial)
+-------------------------------------
+template8="metric",
+
+
+-------------------------------------
+--  Locale (e.g. "es_ES.UTF-8")
+--  Leave empty for default
+-------------------------------------
+template9=""
+
+}
+
+
+---------------------------------------------------
+---------------------------------------------------
+
+
+conky.text = [[
+\
+\
+${execi 300 ~/.harmattan-assets/get_weather ${template6} ${template7} ${template8} ${template9}}\
+\
+\
+\
+\
+\
+${image ~/.conky/eos/images/top-bg.png -p 20,30 -s 228x61}\
+${image ~/.conky/eos/images/fav-color.png -p 20,91 -s 228x86}\
+${image ~/.conky/eos/images/bg-1.png -p 20,177 -s 228x86}\
+${image ~/.conky/eos/images/bg-2.png -p 20,263 -s 228x105}\
+${image ~/.conky/eos/images/bg-3.png -p 20,368 -s 228x110}\
+${image ~/.conky/eos/images/bg-4.png -p 20,478 -s 228x14}\
+${image ~/.conky/eos/images/bottom-bg.png -p 20,492 -s 228x99}\
+${image ~/.conky/eos/images/bg-5.png -p 20,477 -s 228x16}\
+${image ~/.conky/eos/images/bg-4.png -p 20,591 -s 228x14}\
+${image ~/.conky/eos/images/bg-3.png -p 20,605 -s 228x110}\
+${image ~/.conky/eos/images/bg-5.png -p 20,590 -s 228x16}\
+${image ~/.conky/eos/images/bg-2.png -p 20,715 -s 228x105}\
+${image ~/.conky/eos/images/bottom-bg.png -p 20,820 -s 228x99}\
+${image ~/.conky/eos/images/separator-v.png -p 95,185 -s 1x76}\
+${image ~/.conky/eos/images/separator-v.png -p 172,185 -s 1x76}\
+${image ~/.conky/eos/images/separator-h.png -p 21,369 -s 226x1}\
+${image ~/.conky/eos/images/separator-h.png -p 21,269 -s 226x1}\
+${image ~/.conky/eos/images/separator-h.png -p 21,704 -s 226x1}\
+${image ~/.conky/eos/images/separator-h.png -p 21,820 -s 226x1}\
+\
+\
+\
+\
+${color3}${voffset 185}${alignc 77}${execi 300 LANG=${template9} LC_TIME=${template9} date +%^a}${color}
+${color3}${voffset -13}${alignc}${execi 300 LANG=${template9} LC_TIME=${template9} date -d +1day +%^a}${color}
+${color3}${voffset -13}${alignc -77}${execi 300 LANG=${template9} LC_TIME=${template9} date -d +2day +%^a}${color}
+\
+\
+\
+\
+${color2}${voffset 45}${alignc 77}${execi 300 ~/.harmattan-assets/parse_weather 'avg' '.main.temp_min' '0'}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}/${execi 300 ~/.harmattan-assets/parse_weather 'avg' '.main.temp_max' '0'}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${color}
+${color2}${voffset -15}${alignc}${execi 300 ~/.harmattan-assets/parse_weather 'avg' '.main.temp_min' '1'}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}/${execi 300 ~/.harmattan-assets/parse_weather 'avg' '.main.temp_max' '1'}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${color}
+${color2}${voffset -15}${alignc -77}${execi 300 ~/.harmattan-assets/parse_weather 'avg' '.main.temp_min' '2'}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}/${execi 300 ~/.harmattan-assets/parse_weather 'avg' '.main.temp_max' '2'}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${color}
+\
+\
+\
+\
+${goto 36}${voffset -160}${font Raleway:size=36}${color1}${execi 300 jq -r .main.temp ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num}${if_match "$template8" == "metric"} °C${else}${if_match "$template8" == "imperial"} °F${else}${if_match "$template8" == "default"} K${endif}${endif}${endif}${font}${color}
+${goto 46}${voffset 5}${font Raleway:size=12}${color1}${execi 300 jq -r .weather[0].description ~/.cache/harmattan-conky/weather.json | sed "s|\<.|\U&|g"}${font}${color}
+${color1}${alignr 52}${voffset -70}${execi 300 jq -r .main.pressure ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num} hPa
+${color1}${alignr 52}${voffset 7}${execi 300 jq -r .main.humidity ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num} %${color}
+${color1}${alignr 52}${voffset 7}${execi 300 jq -r .wind.speed ~/.cache/harmattan-conky/weather.json | awk '{print int($1+0.5)}' # round num}${if_match "$template8" == "metric"} m/s${else}${if_match "$template8" == "default"} m/s${else}${if_match "$template8" == "imperial"} mi/h${endif}${endif}${endif}${color}
+\
+\
+\
+\
+${voffset -125}${font Raleway:size=22}${alignc}${color2}${time %H:%M}${font}${color}
+${voffset 4}${font Raleway:size=10}${alignc}${color6}${execi 300 LANG=${template9} LC_TIME=${template9} date +"%A, %B %-d"}${font}${color}
+\
+\
+\
+\
+${voffset 289}${goto 40}${color2}${execi 10000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-26}${alignr 39}${exec sensors | grep 'Package id 0' | cut -c17-18 | sed '/^$/d'}°C${color}
+${voffset 4}${goto 30}${color5}CPU:${color}
+${voffset 4}${goto 30}${color5}GHz:${color}
+${voffset 4}${goto 30}${color5}Mem:${color}
+${voffset 4}${goto 30}${color5}Uptime:${color}
+${voffset 4}${goto 30}${color5}${execi 10000 cat /etc/lsb-release | grep "DISTRIB_DESCRIPTION" | cut -d= -f2 | tr -d '"'}${color}
+${voffset -87}${goto 62}${color6}${cpu cpu0}%${goto 92}${cpu cpu1}%${goto 122}${cpu cpu2}%${goto 152}${cpu cpu3}%${goto 182}${cpu cpu4}%${goto 212}${cpu cpu5}%${color}
+${voffset 4}${goto 60}${color6}${exec awk '/cpu MHz/{i++}i==1{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 90}${color6}${exec awk '/cpu MHz/{i++}i==2{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 120}${color6}${exec awk '/cpu MHz/{i++}i==3{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 150}${color6}${exec awk '/cpu MHz/{i++}i==4{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 180}${color6}${exec awk '/cpu MHz/{i++}i==5{printf "%.f",$4; exit}' /proc/cpuinfo}${goto 210}${color6}${exec awk '/cpu MHz/{i++}i==6{printf "%.f",$4; exit}' /proc/cpuinfo}${color}
+${voffset 4}${alignr 30}${color6}${memperc}%${color}
+${voffset 4}${alignr 30}${color6}${uptime_short}${color}
+${voffset 4}${alignr 30}${color6}${kernel}${color}
+${voffset -47}${alignc}${color2}${membar 5,36}${color}
+\
+\
+\
+\
+${voffset 54}${goto 40}${color5}${top_mem name 1}${color}
+${voffset 3}${goto 40}${color5}${top_mem name 2}${color}
+${voffset 3}${goto 40}${color5}${top_mem name 3}${color}
+${voffset 3}${goto 40}${color5}${top_mem name 4}${color}
+${voffset 3}${goto 40}${color5}${top_mem name 5}${color}
+${voffset -82}${alignc}${color2}${top_mem mem 1}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 2}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 3}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 4}%${color}
+${voffset 3}${alignc}${color2}${top_mem mem 5}%${color}
+${voffset -82}${alignr 39}${color6}${top_mem mem_res 1}${color}
+${voffset 3}${alignr 39}${color6}${top_mem mem_res 2}${color}
+${voffset 3}${alignr 39}${color6}${top_mem mem_res 3}${color}
+${voffset 3}${alignr 39}${color6}${top_mem mem_res 4}${color}
+${voffset 3}${alignr 39}${color6}${top_mem mem_res 5}${color}
+${voffset -100}${goto 40}${color1}Proc${color}
+${voffset -14}${alignc}${color1}Mem%${color}
+${voffset -14}${alignr 39}${color1}Mem${color}
+\
+\
+\
+\
+${voffset 115}${goto 40}${color5}${top name 1}${color}
+${voffset 3}${goto 40}${color5}${top name 2}${color}
+${voffset 3}${goto 40}${color5}${top name 3}${color}
+${voffset 3}${goto 40}${color5}${top name 4}${color}
+${voffset 3}${goto 40}${color5}${top name 5}${color}
+${voffset -82}${alignc}${color2}${top cpu 1}%${color}
+${voffset 3}${alignc}${color2}${top cpu 2}%${color}
+${voffset 3}${alignc}${color2}${top cpu 3}%${color}
+${voffset 3}${alignc}${color2}${top cpu 4}%${color}
+${voffset 3}${alignc}${color2}${top cpu 5}%${color}
+${voffset -82}${alignr 39}${color6}${top time 1}${color}
+${voffset 3}${alignr 39}${color6}${top time 2}${color}
+${voffset 3}${alignr 39}${color6}${top time 3}${color}
+${voffset 3}${alignr 39}${color6}${top time 4}${color}
+${voffset 3}${alignr 39}${color6}${top time 5}${color}
+${voffset -99}${goto 40}${color1}Proc${color}
+${voffset -14}${alignc}${color1}CPU%${color}
+${voffset -14}${alignr 39}${color1}Time${color}
+\
+\
+\
+\
+${voffset 105}${goto 40}${color2}${execi 10000 nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}${alignr 39}${execi 10000 nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits}${color}
+${voffset 4}${goto 40}${color5}GPU Temp:${color}
+${voffset 4}${goto 40}${color5}Fan Speed:${color}
+${voffset 4}${goto 40}${color5}GPU Clock:${color}
+${voffset 4}${goto 40}${color5}Mem Clock:${color}
+${voffset 4}${goto 40}${color5}Mem Used:${color}
+${voffset -86}${alignr 39}${color6}${nvidia temp} °C${color}
+${voffset 4}${alignr 39}${color6}${execi 5 nvidia-settings -q [fan:0]/GPUCurrentFanSpeed -t} %${color}
+${voffset 4}${alignr 39}${color6}${nvidia gpufreq} MHz${color}
+${voffset 4}${alignr 39}${color6}${nvidia memfreq} MHz${color}
+${voffset 4}${alignr 39}${color6}${execi 5 nvidia-settings -q [gpu:0]/UsedDedicatedGPUMemory -t} / ${exec nvidia-settings -q [gpu:0]/TotalDedicatedGPUMemory -t} MiB${color}
+\
+\
+\
+\
+${if_running spotify}
+${voffset 0}${goto 40}${color2}Spotify ${color6}(${execi 10 ~/.conky/conky-spotify/scripts/status.sh})${color}
+${voffset 3}${goto 40}${color5}Title:${alignr 39}${color6}${execi 10 ~/.conky/conky-spotify/scripts/title.sh}${color}
+${voffset 3}${goto 40}${color5}Artist:${alignr 39}${color6}${execi 10 ~/.conky/conky-spotify/scripts/artist.sh}${color}
+${voffset 3}${goto 40}${color5}Album:${alignr 39}${color6}${execi 10 ~/.conky/conky-spotify/scripts/album.sh}${color}
+${else}
+${voffset -10}${goto 40}${color2}Spotify ${color6}(Offline)${color}
+${image ~/.conky/eos/images/spotify_icon.png -p 100,850 -s 48x50}
+${endif}
+\
+\
+\
+\
+${if_existing /proc/net/route eno1}
+${voffset -645}${goto 30}${color5}Up: ${color2}${upspeed eno1}${color5}${goto 140}Down: ${color2}${downspeed eno1}
+${voffset 2}${goto 30}${upspeedgraph eno1 22,80 FFFFFF FFFFFF}${goto 140}${downspeedgraph eno1 22,80 FFFFFF FFFFFF}
+${voffset 2}${goto 30}${color5}Sent: ${color2}${totalup eno1}${color5}${goto 140}Received: ${color2}${totaldown eno1}
+${voffset 3}${goto 30}${color5}Ext: ${color2}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color5}${goto 140}Int: ${color2}${addr eno1}${color}
+${else}
+${voffset -635}${goto 40}${color8}Network disconnected${color}
+${image ~/.conky/eos/images/offline.png -p 44,284 -s 16x16}
+${endif}
+\
+\
+\
+\
+${image ~/.conky/eos/images/pressure.png -p 224,100 -s 16x16}\
+${image ~/.conky/eos/images/humidity.png -p 224,120 -s 16x16}\
+${image ~/.conky/eos/images/wind.png -p 224,142 -s 16x16}\
+${execi 300 cp -f ~/.harmattan-assets/icons/#fff__32/$(~/.harmattan-assets/parse_weather 'first' '.weather[0].id' '0').png ~/.cache/harmattan-conky/weather-1.png}${image ~/.cache/harmattan-conky/weather-1.png -p 41,207 -s 32x32}\
+${execi 300 cp -f ~/.harmattan-assets/icons/#fff__32/$(~/.harmattan-assets/parse_weather 'first' '.weather[0].id' '1').png ~/.cache/harmattan-conky/weather-2.png}${image ~/.cache/harmattan-conky/weather-2.png -p 119,207 -s 32x32}\
+${execi 300 cp -f ~/.harmattan-assets/icons/#fff__32/$(~/.harmattan-assets/parse_weather 'first' '.weather[0].id' '2').png ~/.cache/harmattan-conky/weather-3.png}${image ~/.cache/harmattan-conky/weather-3.png -p 195,207 -s 32x32}${font}${voffset -120}\
+
+]]

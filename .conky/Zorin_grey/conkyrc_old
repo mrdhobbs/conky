@@ -1,0 +1,90 @@
+# Conky settings #
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+temperature_unit celsius
+
+# Window specifications #
+own_window_class Conky
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 520 600
+maximum_width 520
+
+alignment top_right
+gap_x 0
+gap_y 10
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+default_color gray
+default_shade_color red
+default_outline_color green
+
+# Text settings #
+use_xft yes
+override_utf8_locale yes
+xftfont Play:normal:size=7
+xftalpha 0.9
+uppercase no
+
+default_color 333333
+color0 111111
+color1 000000
+color2 1994D1
+#color3 1994D1 
+
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_colour 000000
+
+TEXT
+${font Michroma:size=11}${color0}${alignr 270}${pre_exec cat /etc/issue.net}  ${machine}
+${font Michroma:size=8}${alignr 270}Kernel:  ${kernel}
+${alignr 270}Uptime:  ${uptime_short}
+${font Play:normal:size=7}${voffset -32}${color1}${goto 300}${freq_g cpu0} Ghz${alignr 130}${acpitemp} °C
+${voffset 0}${goto 300}CPU 1${alignr 130}${cpu cpu0}%
+${voffset 2}${goto 300}CPU 2${alignr 130}${cpu cpu1}%
+${voffset 2}${goto 300}CPU 3${alignr 130}${cpu cpu2}%
+${voffset 2}${goto 300}CPU 4${alignr 130}${cpu cpu3}%
+${font Michroma:size=10}${color0}${goto 195}${voffset -10}CPU 
+${font Play:normal:size=7}${color1}${goto 160}${voffset 7}${top name 1}${alignr 255}${top cpu 1}%
+${goto 160}${top name 2}${alignr 255}${top cpu 2}%
+${goto 160}${top name 3}${alignr 255}${top cpu 3}%
+${font Michroma:size=10}${color0}${goto 320}${voffset 0}MEM
+${font Play:normal:size=7}${color1}${goto 295}${voffset 0}${top_mem name 1}${alignr 125}${top_mem mem 1}%
+${goto 295}${top_mem name 2}${alignr 125}${top_mem mem 2}%
+${goto 295}${top_mem name 3}${alignr 125}${top_mem mem 3}%
+${goto 295}SWAP${alignr 125}${swap} / ${swapmax}
+${goto 295}RAM${alignr 125}${mem} / ${memmax}
+${font Michroma:size=10}${color0}${voffset 70}${goto 60}HDD
+${font Play:normal:size=7}${color1}${goto 25}${voffset 0}Root${alignr 385}${fs_used /} / ${fs_size /}
+${goto 25}${voffset 0}Data${alignr 385}${fs_used /mnt/data} / ${fs_size /mnt/data}
+${goto 25}Toshiba${alignr 385}${fs_used /mnt/Toshiba} / ${fs_size /mnt/Toshiba}
+${font Michroma:size=10}${color0}${voffset 0}${goto 195}NET
+${font Play:normal:size=7}${color1}${goto 160}${voffset 6}Up${alignr 255}${upspeed eth0} / ${totalup eth0}
+${goto 160}Down${alignr 255}${downspeed eth0} / ${totaldown eth0}
+${goto 160}Local IP${alignr 255}${addr eth0}
+${goto 160}Public IP${alignr 255}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}
+

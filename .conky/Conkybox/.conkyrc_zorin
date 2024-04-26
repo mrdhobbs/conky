@@ -1,0 +1,105 @@
+# Conky settings #
+background no
+update_interval 1
+
+cpu_avg_samples 2
+net_avg_samples 2
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+#imlib_cache_size 0
+
+#temperature_unit fahrenheit
+
+# Window specifications #
+own_window yes
+own_window_argb_visual true
+own_window_argb_value 255
+own_window_type desktop
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+border_inner_margin 0
+border_outer_margin 0
+
+minimum_size 218 220
+maximum_width 220
+alignment tr
+gap_x 10
+gap_y 30
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+override_utf8_locale yes
+xftfont Ubuntu:size=8
+xftalpha 0
+uppercase no
+
+temperature_unit celsius
+
+default_color 000000
+color0 000000
+#color1 062b61 
+color1 DDDDDD
+color2 AAAAAA 
+color3 DE3D00 
+color4 dcde1c 
+color5 0a57a4 
+
+# Lua Load #
+lua_load /home/daniel/.conky/Conkybox/.zorin/rings.lua
+lua_load /home/daniel/.conky/Conkybox/.zorin/box.lua
+lua_draw_hook_pre clock_rings
+lua_draw_hook_post main_box
+
+TEXT
+${voffset 5}${offset 15}${font Ubuntu:size=30}${color1}${time %e}
+${goto 25}${font Ubuntu:size=15}${color5}${voffset -24}${time %b}${offset 10}${time %Y}
+${font Ubuntu:size=10}${color1}${voffset 0}${goto 20}${time %A}${goto 153}${color1}${time %H}:${time %M}
+
+${font Ubuntu:size=9}${color1}${voffset 50}${goto 15}CPU 1${goto 120}CPU 2
+${goto 18}${cpu cpu0}%${goto 122}${cpu cpu1}%
+${image ~/.conky/Conkybox/.pear/pear.png -p 158,13 -s 50x50}
+
+${voffset -20}${goto 15}${font Arial:size=8}${color1}${top name 1}${goto 145}${top cpu 1}%
+${goto 15}${font Arial:size=8}${color2}${top name 2}${goto 145}${top cpu 2}%
+${goto 15}${font Arial:size=8}${color2}${top name 3}${goto 145}${top cpu 3}%
+
+
+${voffset -10}${goto 120}${color2}${font Arial:size=8}Uptime: ${alignr 12}${uptime_short}
+${goto 120}${color2}${font Arial:size=8}Processes: ${alignr 12}${processes}
+${goto 120}${color2}${font Arial:size=8}Running: ${alignr 19}${running_processes}
+
+${voffset -46}${goto 15}${color1}${font Ubuntu:size=9}RAM
+${goto 18}${memperc}%
+
+${voffset -50}${goto 120}${voffset 56}Swap
+${goto 128}${swapperc}%
+
+${goto 20}${voffset 48}${color1}Root${goto 125}Data
+${voffset 10}${offset 15}${font Arial:size=8,weight:normal${alignr}}${color2}Used: ${alignr 58}${fs_used /}${goto 123}Used: ${alignr 10}${fs_used /mnt/data} 
+${voffset 0}${offset 15}${font Arial:size=8,weight:normal${alignr}}${color2}Size: ${alignr 65}${fs_size /}${goto 123}Size: ${alignr 13}${fs_size /mnt/data}
+
+${voffset 88}${goto 25}${color1}${font Ubuntu:size=9}Connections${goto 138}Weather
+${execi 3600 bash $HOME/.conky/accuweather/accuw_script}${voffset -88}${goto 138}${color1}${font conkyweather:size=38}${execi 3600  sed -n '2p' ~/.conky/accuweather/curr_cond}${font}
+${voffset -6}${goto 142}${color5}${font Ubuntu:size=15}${execi 3600  sed -n '4p' ~/.conky/accuweather/curr_cond}°C${font}
+${voffset 20}${color2}${font Arial:size=9}${goto 10}${downspeed eth0} / ${upspeed eth0}${goto 135}${execpi 3600 sed -n '4p' $HOME/.conky/accuweather/tod_ton}°C / ${execpi 3600 sed -n '5p' $HOME/.conky/accuweather/tod_ton}°C
+${goto 14}IP: ${goto 41}${addr eth0}${goto 118}${execpi 3600 sed -n '3p' $HOME/.conky/accuweather/tod_ton|cut -c1-16}
+${color2}${font Arial:size=9}${goto 40}${execi 21600 wget -O - http://www.myglobalip.com/myip}${goto 118}${execpi 3600 sed -n '3p' $HOME/.conky/accuweather/tod_ton|cut -c17-32}
+
+${voffset 50}${goto 20}${color1}${font Ubuntu:size=9}Fan
+${goto 20}${hwmon 3 fan 2}
+${voffset -77}${goto 122}Temperatures
+${voffset 2}${color2}${font Arial:size=9}${goto 120}Case: ${alignr 12}${hwmon 3 temp 1}°C
+${voffset 2}${goto 120}CPU: ${alignr 12}${hwmon 3 temp 2}°C
+${voffset 2}${goto 120}GPU: ${alignr 12}${nvidia temp}°C

@@ -1,0 +1,155 @@
+conky.config = {
+-- conky for neon KDE by Daniel Hobbs
+-- Conky settings
+background = false,
+update_interval = 5,
+
+double_buffer = true,
+no_buffers = true,
+
+-- Window specifications
+own_window = true,
+own_window_type = 'normal',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+own_window_argb_visual = true,
+own_window_argb_value = 128,
+own_window_transparent = false,
+
+minimum_width = 330,
+minimum_height = 1080,
+maximum_width = 330,
+
+-- Alignment
+alignment = 'top_right',
+gap_x = 0,
+gap_y = 0,
+
+border_inner_margin = 0,
+border_outer_margin = 0,
+
+-- Graphics settings
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+imlib_cache_size = 0,
+
+-- Text settings
+use_xft = true,
+xftalpha = 0,
+font = 'Noto:size=9',
+
+-- Color scheme
+default_color = 'FFFFFF',
+
+color1 = '006400',
+color2 = '9933CC',
+color3 = '669900',
+color4 = 'FF8800',
+color5 = 'CC0000',
+color6 = 'AAAAAA',
+color7 = 'DDDDDD',
+
+-------------------------------------
+--  API Key
+-------------------------------------
+template6="230e6827697cf6fddc7d47c66ecd20e3",
+
+
+-------------------------------------
+--  City ID
+-------------------------------------
+template7="2653192",
+
+
+-------------------------------------
+--  Temp Unit (default, metric, imperial)
+-------------------------------------
+template8="metric",
+
+
+-------------------------------------
+--  Locale (e.g. "es_ES.UTF-8")
+--  Leave empty for default
+-------------------------------------
+template9=""
+}
+
+conky.text = [[
+${execi 300 l=${template9}; l=${l%%_*}; curl -s "api.openweathermap.org/data/2.5/forecast/daily?APPID=${template6}&id=${template7}&cnt=5&units=${template8}&lang=$l" -o ~/.cache/forecast.json}\
+${execi 300 l=${template9}; l=${l%%_*}; curl -s "api.openweathermap.org/data/2.5/weather?APPID=${template6}&id=${template7}&cnt=5&units=${template8}&lang=$l" -o ~/.cache/weather.json}\
+\
+${voffset 0}${alignc}${font bold:size=50}${time %I:%M}${font :size=24}${time %P}${font}
+${voffset 10}${alignc}${time %A} ${time %d} ${time %B} ${time %Y}
+${voffset 20}${goto 10}${execi 3600 jq -r .name ~/.cache/weather.json}
+${voffset -20}${alignr 10}${execi 3600 date -d "@$(jq -r .dt ~/.cache/weather.json)" +%-I:%M\ %P}
+${voffset -25}${goto 132}${font :size=45}${execi 3600 jq -r .main.temp ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}°${font}
+${execi 3600 cp -f ~/.harmattan-assets/icons/#dcdcdc__64/$(jq .weather[0].id ~/.cache/weather.json).png ~/.cache/weather.png}${image ~/.cache/weather.png -p 5,160 -s 50x50}
+${voffset -75}${goto 55}${execi 3600 jq -r .weather[0].description ~/.cache/weather.json | sed "s|\<.|\U&|g"}
+${image ~/.conky/eos/images/wind.png -p 55,180 -s 15x15}${goto 77}${execi 3600 jq -r .wind.speed ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}${if_match "$template8" == "metric"} m/s${else}${if_match "$template8" == "default"} m/s${else}${if_match "$template8" == "imperial"} mi/h${endif}${endif}${endif}
+${image ~/.conky/eos/images/humidity.png -p 55,200 -s 15x15}${goto 77}${execi 3600 jq -r .main.humidity ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num} %
+${execi 3600 cp -f ~/.harmattan-assets/icons/#dcdcdc__32/$(jq .list[0].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-today.png}${image ~/.cache/weather-today.png -p 245,160 -s 25x25}${execi 3600 cp -f ~/.harmattan-assets/icons/#dcdcdc__32/$(jq .list[1].weather[0].id ~/.cache/forecast.json).png ~/.cache/weather-tomorrow.png}${image ~/.cache/weather-tomorrow.png -p 245,198 -s 25x25}
+${voffset -80}${goto 275}${execi 3600 LANG=${template9} LC_TIME=${template9} date +%^a}
+${voffset -5}${goto 275}${execi 3600 jq -r .list[0].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}° / ${execi 3600 jq -r .list[0].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°
+${voffset 5}${goto 275}${execi 3600 LANG=${template9} LC_TIME=${template9} date -d +1day +%^a}
+${voffset -5}${goto 275}${execi 3600 jq -r .list[1].temp.max ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}° / ${execi 3600 jq -r .list[1].temp.min ~/.cache/forecast.json | awk '{print int($1+0.5)}' # round num}°
+
+${font bold:size=12}${voffset 0}${goto 10}HARD DRIVES$font
+${goto 20}ROOT ${alignr 20}${color7}${fs_bar 12,220 /}
+${voffset -22}${font :bold:size=8}${alignr 25}${color6}${fs_free /} free${color}${font}
+${voffset 2}${goto 20}DATA ${alignr 20}${color7}${fs_bar 12,220 /mnt/Data}
+${voffset -22}${font :bold:size=8}${alignr 25}${color6}${fs_free /mnt/Data} free${color}${font}
+${voffset 2}${goto 20}PLEX ${alignr 20}${color7}${fs_bar 12,220 /mnt/Plex}
+${voffset -22}${font :bold:size=8}${alignr 25}${color6}${fs_free /mnt/Plex} free${color}${font}
+${voffset 2}${goto 20}BACKUP ${alignr 20}${color7}${fs_bar 12,220 /mnt/Backup}
+${voffset -22}${font :bold:size=8}${alignr 25}${color6}${fs_free /mnt/Backup} free${color}${font}
+${voffset 2}
+${font bold:size=12}${goto 10}NETWORK$font
+${goto 20}${color}Up:${color} ${color6}${upspeed wlx503eaaa240cb}/s${color}${alignr 20}${color}Sent:${color} ${color6}${totalup wlx503eaaa240cb}${color}
+${voffset 0}${goto 20}${color}Down:${color} ${color6}${downspeed wlx503eaaa240cb}/s${color}${alignr 20}${color}Received:${color} ${color6}${totaldown wlx503eaaa240cb}${color}
+${voffset 0}${goto 20}${color}External IP Address: ${color6}${alignr 20}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color}
+${voffset 0}${goto 20}Internal IP Address: ${color6}${alignr 20}${addr wlx503eaaa240cb}${color}
+
+${font bold:size=12}${voffset 0}${goto 10}PROCESSORS$font${color6}${alignr 25}${hwmon 0 temp 1}°C
+${color}${goto 20}CPU1 ${alignr 20}${color7}${cpugraph cpu1 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu1}%${color}${font}
+${voffset -2}${goto 20}CPU2 ${alignr 20}${color7}${cpugraph cpu2 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu2}%${color}${font}
+${voffset -2}${goto 20}CPU3 ${alignr 20}${color7}${cpugraph cpu3 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu3}%${color}${font}
+${voffset -2}${goto 20}CPU4 ${alignr 20}${color7}${cpugraph cpu4 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu4}%${color}${font}
+${voffset -2}${goto 20}CPU5 ${alignr 20}${color7}${cpugraph cpu5 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu5}%${color}${font}
+${voffset -2}${goto 20}CPU6 ${alignr 20}${color7}${cpugraph cpu6 12,220}
+${voffset -20}${offset 5}${font :bold:size=8}${alignr 25}${color6}${cpu cpu6}%${color}${font}
+${voffset 5}${goto 20}${top name 1}${alignr 20}${color6}${top cpu 1}%${color}
+${voffset 0}${goto 20}${top name 2}${alignr 20}${color6}${top cpu 2}%${color}
+${voffset 0}${goto 20}${top name 3}${alignr 20}${color6}${top cpu 3}%${color}
+${voffset 0}${goto 20}${top name 4}${alignr 20}${color6}${top cpu 4}%${color}
+${voffset 0}${goto 20}${top name 5}${alignr 20}${color6}${top cpu 5}%${color}
+
+${font bold:size=12}${voffset 0}${goto 10}MEMORY$font${voffset 4}
+${color}${goto 20}RAM ${alignr 20}${color7}${membar 12,220}
+${voffset -23}${offset 5}${font :bold:size=8}${alignr 25}${color6}${mem}${color}${font}
+${voffset 0}${goto 20}SWAP ${alignr 20}${color7}${swapbar 12,220}
+${voffset -23}${offset 5}${font :bold:size=8}${alignr 25}${color6}${swap}${color}${font}
+${voffset 5}${goto 20}${top_mem name 1}${alignr 20}${color6}${top_mem mem 1}%${color}
+${voffset 0}${goto 20}${top_mem name 2}${alignr 20}${color6}${top_mem mem 2}%${color}
+${voffset 0}${goto 20}${top_mem name 3}${alignr 20}${color6}${top_mem mem 3}%${color}
+${voffset 0}${goto 20}${top_mem name 4}${alignr 20}${color6}${top_mem mem 4}%${color}
+${voffset 0}${goto 20}${top_mem name 5}${alignr 20}${color6}${top_mem mem 5}%${color}
+${voffset 0}
+${font bold:size=12}${voffset 0}${goto 10}SYSTEM INFO${font}${voffset 4}
+${goto 20}${exec cat /etc/issue.net} ${alignr 20}${exec cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq | cut -c 1-26}
+${voffset 0}${goto 20}${kernel} ${alignr 20} ${machine}
+${voffset 0}${goto 20}Uptime: ${color6}${uptime_short}${color}
+${voffset 0}${goto 20}Processes: ${color6}${processes}${color}${alignr 20}Running: ${color6}${running_processes}${color}
+
+${goto 20}Graphics Card: ${color6}${exec nvidia-smi -q | grep "Product Name" | cut -c45-80}${color}
+${voffset 0}${goto 20}Graphics Driver: ${color6}${exec nvidia-smi -q | grep "Driver Version" | cut -c45-60}${color}
+${voffset 0}${goto 20}Graphics Temp: ${color6}${execi 300 nvidia-smi -q | grep "GPU Current Temp" | cut -c45-60}${color}${alignr 20}Graphics Fan: ${color6}${execi 300 nvidia-smi -q | grep "Fan Speed" | cut -c45-60}${color}
+${voffset 0}${goto 20}Utilization: GPU ${color6}${execi 300 nvidia-smi -q | grep "Gpu" | cut -c45-60}${color}${alignr 20}Mem ${color6}${execi 300 nvidia-smi -q | grep "Memory" | sed -e 's/Memory.*: //'| awk 'NR==3{print; }' | cut -c9-13}${color}
+${execi 300 /mnt/Data/.conky/kde/audio.sh}${image /mnt/Data/.conky/kde/audio.png -p 280,1180 -s 25x25}
+]]

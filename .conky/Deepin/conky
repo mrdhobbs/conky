@@ -1,0 +1,172 @@
+--------------------------
+-- Sidebar Diagnostics ---
+-- @ceeslans 2020-03-26 --
+---- Edit by mrdhobbs ----
+-------- 21/08/22 --------
+--------------------------
+
+conky.config = {
+
+	update_interval = 5,
+	total_run_times = 0,
+	cpu_avg_samples = 2,
+	double_buffer = true,
+	no_buffers = true,
+	pad_percents = 2,
+	short_units = false,
+	top_name_width = 9,
+	use_spacer = 'right',
+
+	background = true,
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_colour = '000000',
+		-- own_window_transparent = true,
+	own_window_argb_visual = true,
+	own_window_argb_value = 128,
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	own_window_class = 'Conky',
+	own_window_title = 'ConkySidebarDiagnostics',
+
+	draw_outline = false,
+	draw_shades = false,
+	default_shade_color = '000000',
+	stippled_borders = 0,
+	draw_borders = false,
+	border_width = 1,
+	draw_graph_borders = false,
+	border_inner_margin = 0,
+
+	use_xft = true,
+	xftalpha = 1,
+	font = 'Dejavu Sans Condensed:size=8',
+	override_utf8_locale = true,
+	uppercase = false,
+
+	minimum_width = 200,
+	maximum_width = 200,
+	minimum_height = 1320,
+	gap_x = 15,
+	gap_y = 15,
+	alignment = 'top_right',
+
+	default_color = 'AAAAAA',
+
+	--color1 = 'FFFFFF',	-- #white
+	--color1 = '00FFFF',	-- #cyan
+	--color1 = 'FFFF00',	-- #yellow
+	--color1 = '00FF00',	-- #lime green
+	--color1 = 'F62817',	-- #fire engine red
+	color1 = '3CCDFF',	-- #blue
+	--color1 = '151515',	-- #black
+	--color1 = '308280',	-- #prussian green
+
+-- if_up_strictness link:  up | link | address
+    if_up_strictness = 'address',
+
+-- network template
+   template0 = 'eno1',
+   template1 = 'eth1',
+   template2 = 'wlan0',
+   template3 = 'wlan1',
+
+-- time template
+   template4 = '%H:%M:%S',
+
+};
+
+conky.text = [[
+### TIME/DATE ###
+${color1}\
+${voffset 10}${goto 15}${font Poky:size=24}d ${voffset -7}\
+${alignr 15}${font Dejavu Sans Condensed:size=16:weight=bold}${time %H:%M}${color}
+${voffset -7}${alignr 15}${font}${time %A, %d %B %Y}
+### SYSTEM ###
+${color1}${voffset 10}${hr}
+${voffset 10}${goto 15}${font Poky:size=24}x ${voffset -10}\
+${alignr 15}${font Dejavu Sans Condensed:size=12:weight=bold}SYS${font}${voffset 17}${color}
+${font Dejavu Sans Condensed:size=8:weight=bold}\
+${alignc}${exec lsb_release -ds | tr -d '"' | tr -d '\n'}${font}
+${alignc}${font}${kernel}
+${alignc}${sysname} ${machine}
+${voffset 10}\
+${goto 15}Session ${alignr 15}${execi 86400 printenv XDG_SESSION_DESKTOP}
+${goto 15}Uptime ${alignr 15}${uptime}
+${goto 15}User ${alignr 15}${execi 86400 printenv USER}@${nodename}
+${goto 15}Processes ${alignr 15}${processes}
+${goto 15}Running ${alignr 10}${running_processes}
+${goto 15}Updates ${alignr 15}${execi 4320 apt list --upgradable 2>&1 | wc -l | awk '{print $0-4}'} / ${color1}${execi 4320 apt list --upgradable 2>&1 | grep "\-security" | wc -l}${color}
+${goto 15}Gamemode ${alignr 15}${if_match "${exec gamemoded -s | awk '{print $3;}'}" == "active"}${color1}ON${color}${else}OFF${endif}
+${goto 15}Fans ${alignr 15}${hwmon 2 fan 2} | ${hwmon 2 fan 3} | ${hwmon 2 fan 4} | ${hwmon 2 fan 5} | ${hwmon 2 fan 6}
+### DISK ###
+${color1}${voffset 10}${hr}
+${goto 15}${font Poky:size=24}y ${voffset -10}\
+${alignr 15}${font Dejavu Sans Condensed:size=12:weight=bold}DISK${font}${voffset 15}${color}
+${goto 15}Root ${alignr 15}${fs_bar 8,70 /}
+${voffset -17}${alignr 90}${fs_free /}
+${voffset 4}\
+${goto 15}Data ${alignr 15}${fs_bar 8,70 /mnt/Data}
+${voffset -17}${alignr 90}${fs_free /mnt/Data}
+${voffset 4}\
+${goto 15}Games ${alignr 15}${fs_bar 8,70 /mnt/Games}
+${voffset -17}${alignr 87}${fs_free /mnt/Games}
+${voffset 4}\
+${goto 15}Plex ${alignr 15}${fs_bar 8,70 /mnt/Plex}
+${voffset -17}${alignr 90}${fs_free /mnt/Plex}
+${voffset 4}\
+${goto 15}Backup ${alignr 15}${fs_bar 8,70 /mnt/Backup}
+${voffset -17}${alignr 90}${fs_free /mnt/Backup}
+### CPU ###
+${color1}${voffset 10}${hr}
+${goto 15}${font Poky:size=24}a ${voffset -10}\
+${alignr 15}${font Dejavu Sans Condensed:size=12:weight=bold}CPU${font}${voffset 15}${color}
+${alignc}${font Dejavu Sans Condensed:size=8:weight=bold}${execi 86400  sed -nr -e '/^model name\s*: /{s:::; s:(intel|amd|[(]r[)])::Ig; s:@.*::;p;q}' /proc/cpuinfo}
+${voffset 5}${font}\
+${goto 15}Clock ${alignr 15}${freq}MHz
+${goto 15}Temp ${alignr 15}${exec sensors | grep -A 2 'pch_cannonlake-virtual-0' | grep '°C' | cut -c 16-17}°C
+${goto 15}Load ${alignr 15}${cpu cpu0}%
+${goto 15}Core1 ${alignr 15}${cpu cpu1}%
+${goto 15}Core2 ${alignr 15}${cpu cpu2}%
+${goto 15}Core3 ${alignr 15}${cpu cpu3}%
+${goto 15}Core4 ${alignr 15}${cpu cpu4}%
+${goto 15}Core5 ${alignr 15}${cpu cpu5}%
+${goto 15}Core6 ${alignr 15}${cpu cpu6}%
+### TOP CPU
+${voffset 10}${font}\
+${goto 20}${top name 1}${alignr 20}${top cpu 1} %
+${goto 20}${top name 2}${alignr 20}${top cpu 2} %
+${goto 20}${top name 3}${alignr 20}${top cpu 3} %
+${goto 20}${top name 4}${alignr 20}${top cpu 4} %
+### MEM ###
+${color1}${voffset 10}${hr}
+${goto 15}${font Poky:size=24}M ${voffset -10}\
+${alignr 15}${font Dejavu Sans Condensed:size=12:weight=bold}RAM${font}${voffset 15}${color}
+${goto 15}Load ${alignr 15}${memperc} %
+${goto 15}Used ${alignr 15}${mem}
+${goto 15}Size ${alignr 15}${memmax}
+${goto 15}Free ${alignr 15}${memfree}
+### TOP  MEM
+${voffset 10}${font}\
+${goto 20}${top_mem name 1} ${alignr 20}${top_mem mem 1} %
+${goto 20}${top_mem name 2} ${alignr 20}${top_mem mem 2} %
+${goto 20}${top_mem name 3} ${alignr 20}${top_mem mem 3} %
+${goto 20}${top_mem name 4} ${alignr 20}${top_mem mem 4} %
+### GPU ###
+${color1}${voffset 10}${hr}
+${goto 15}${font Poky:size=24}N ${voffset -10}\
+${alignr 15}${font Dejavu Sans Condensed:size=12:weight=bold}GPU${font}${voffset 15}${color}
+${alignc}${font Dejavu Sans Condensed:size=8:weight=bold}${exec nvidia-smi -q | grep "Product Name" | cut -c45-80}
+${voffset 5}${font}\
+${goto 15}Driver ${alignr 15}${exec nvidia-smi -q | grep "Driver Version" | cut -c45-60}
+${goto 15}Temp ${alignr 15}${execi 300 nvidia-smi -q | grep "GPU Current Temp" | cut -c45-60}
+${goto 15}Fan ${alignr 15}${execi 300 nvidia-smi -q | grep "Fan Speed" | cut -c45-60}
+${goto 15}GPU ${execi 300 nvidia-smi -q | grep "Gpu" | cut -c45-60}${alignr 15}Mem ${execi 300 nvidia-smi -q | grep "Memory" | sed -e 's/Memory.*: //'| awk 'NR==3{print; }' | cut -c9-13}
+### NET ###
+${color1}${voffset 10}${hr}
+${goto 15}${font Poky:size=24}Y ${voffset -10}\
+${alignr 15}${font Dejavu Sans Condensed:size=12:weight=bold}NET${font}${voffset 15}${color}
+${goto 15}Ext IP ${alignr 15}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}
+${goto 15}Int IP ${alignr 15}${addr $template0}
+${goto 15}In ${alignr 45}${downspeed $template0}/s${alignr 13}${totaldown $template0}
+${goto 15}Out ${alignr 45}${upspeed $template0}/s${alignr 15}${totalup $template0}
+]]

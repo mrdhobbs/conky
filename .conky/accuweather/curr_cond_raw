@@ -1,0 +1,54 @@
+                    <li class="first current { target: '#detail-now' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/current-weather/326262" class=""><span>Now</span></a>
+                      <div class="nub"></div>
+                    </li>
+                    <li class="{ target: '#detail-day-night' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/daily-weather-forecast/326262"><span>Daily</span></a></li>
+                    <li class="last { target: '#detail-hourly' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/hourly-weather-forecast/326262"><span>Hourly</span></a></li>
+                    <li class="{ target: '#detail-morning' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/morning-weather-forecast/326262"><span>Morning</span></a></li>
+                    <li class="{ target: '#detail-afternoon' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/afternoon-weather-forecast/326262"><span>Afternoon</span></a></li>
+                    <li class="{ target: '#detail-evening' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/evening-weather-forecast/326262"><span>Evening</span></a></li>
+                    <li class="last { target: '#detail-overnight' }"><a href="http://www.accuweather.com/en/gb/bognor-regis/po22-9/overnight-weather-forecast/326262"><span>Overnight</span></a></li>                      
+                  </ul>
+                  <!-- /#detail-tab-buttons.detail-tab-buttons -->
+                  <div id="detail-now" class="detail-tab-panel day">
+                    <div class="bg bg-su">
+                      <div class="forecast">
+                        <div class="icon i-3-xl"></div>
+                        <div class="info"> <span class="cond">Partly sunny</span> <span class="temp">18<span>&deg;</span></span> <span class="realfeel">RealFeel&#174; 15<span>&deg;</span></span> </div>
+                        <!-- /.info -->
+                      </div>
+                      <!-- /.forecast -->
+                      <div class="more-info"> 
+                      <!--
+                        <img src="http://vortex.accuweather.com/adc2010/images/icons-wind/WSW.gif" width="260" height="138" alt="" />
+                        -->
+                        <div class="wind-box-lg">
+                          <div id="wind-arm-day" class="wind-arm"></div>
+                            <p class="n">N</p>
+                            <p class="e">E</p>
+                            <p class="s">S</p>
+                            <p class="w">W</p>
+                            <img src="http://vortex.accuweather.com/adc2010/images/icons-wind/arrow-lg-WSW.png">
+                          </div> 
+                                                
+                                            
+                        <ul class="stats">
+                          <li>Humidity: <strong>72%</strong></li>
+                          <li>Pressure: <strong>1011.00 mb </strong></li>
+                          <li>UV Index: <strong>0</strong></li>
+                          <li>Cloud Cover: <strong>35%</strong></li>
+                          <li>Ceiling: <strong>8077 m</strong></li>
+                          <li>Dew Point: <strong>13&#176;&nbsp;C</strong></li>
+                          <li>Visibility: <strong>16 km</strong></li>
+                        </ul>
+                        <!-- /.stats -->
+                      </div>
+                      <!-- /.more-info -->
+                      
+                      <div style="position:absolute;top:124px;left:427px;height:20px;font-weight:bold;font-size:10px;text-align:center;">33 km/h</div>
+                       
+                    </div>
+                    <!-- /.bg -->
+                  </div>
+                  <!-- /.detail-tab-panel --> 
+                </div>
+                <!-- /#details -->

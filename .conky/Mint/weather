@@ -1,0 +1,69 @@
+conky.config = {
+-- Conky settings #
+	background = false,
+	update_interval = 600,
+	double_buffer = true,
+	no_buffers = true,
+
+-- Window specifications #
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	own_window_title = '',
+	own_window_colour = 'black',
+	own_window_argb_visual = true,
+	own_window_argb_value = 100,
+
+	minimum_width = 253,
+	maximum_width = 253,
+
+-- Alignment #
+	alignment = 'top_right',
+	gap_x = -1920,
+	gap_y = 130,
+
+	border_inner_margin = 15,
+	border_outer_margin = 0,
+
+-- Graphics settings #
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
+
+-- Text settings #
+	use_xft = true,
+	xftalpha = 0,
+	font = 'Open Sans Light:size=10',
+
+	override_utf8_locale = true,
+
+	imlib_cache_size = 0,
+
+-- Color scheme #
+--default_color 666666
+	default_color = '#FFFFFF',
+
+	color1 = '#0099CC',
+	color2 = '#9933CC',
+	color3 = '#669900',
+	color4 = '#FF8800',
+	color5 = '#CC0000',
+	color6 = '#AAAAAA',
+	color7 = '#DDDDDD',
+
+};
+
+conky.text = [[
+${execi 1200 curl -s "http://api.openweathermap.org/data/2.5/weather?id=2655831&APPID=230e6827697cf6fddc7d47c66ecd20e3&units=metric" -o ~/.cache/weather.xml}${font Open Sans Light:size=15}${execi 1200 grep "name" ~/.cache/weather.xml | grep -o "name=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font}
+${voffset -20}${alignr}${execi 1200 grep "yweather:condition" ~/.cache/weather.xml | grep -o "date=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | cut -c17-25}
+${font Open Sans Light:size=60}${alignr}${execi 1200 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}°${font}${voffset -20}
+${execi 1200 cp -f /home/daniel/.conky/myTransparentTiles/conky_icons/$(grep "yweather:condition" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*").png ~/.cache/weather.png}${image ~/.cache/weather.png -p 0,25 -s 60x60}
+${execi 1200 grep "yweather:condition" ~/.cache/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]'}
+${image /home/daniel/.conky/myTransparentTiles/conky_icons/wind.png -p 0,115 -s 15x15}${goto 35}${execi 1200 echo "`grep \"yweather:wind\" ~/.cache/weather.xml | grep -o \"speed=\\\"[^\\\"]*\\\"\" | grep -o \"\\\"[^\\\"]*\\\"\" | grep -o \"[^\\\"]*\"` *0.62" | bc}mph
+${image /home/daniel/.conky/myTransparentTiles/conky_icons/humidity.png -p 0,135 -s 15x15}${goto 35}${execi 1200 grep "yweather:atmosphere" ~/.cache/weather.xml | grep -o "humidity=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}%
+${execi 1200 cp -f /home/daniel/.conky/myTransparentTiles/conky_icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1').png ~/.cache/weather-today.png}${image ~/.cache/weather-today.png -p 0,155 -s 30x30}${execi 1200 cp -f /home/daniel/.conky/myTransparentTiles/conky_icons/$(grep "yweather:forecast" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2').png ~/.cache/weather-tomorrow.png}${image ~/.cache/weather-tomorrow.png -p 130,155 -s 30x30}${voffset -10}
+${goto 60}${execi 1200 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1' | tr '[a-z]' '[A-Z]'}${goto 190}${execi 1200 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "day=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2' | tr '[a-z]' '[A-Z]'}
+${goto 60}${execi 1200 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}° / ${execi 1200 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==1'}°${goto 190}${execi 1200 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "high=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}° / ${execi 1200 grep "yweather:forecast" ~/.cache/weather.xml | grep -o "low=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | awk 'NR==2'}°
+${voffset -35}
+]];

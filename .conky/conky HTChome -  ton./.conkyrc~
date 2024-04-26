@@ -1,0 +1,66 @@
+ # -- Conky settings -- #
+    background no
+    update_interval 1
+
+    cpu_avg_samples 2
+    net_avg_samples 2
+
+    override_utf8_locale yes
+
+    double_buffer yes
+    no_buffers yes
+
+    text_buffer_size 2048
+    imlib_cache_size 0
+
+    # -- Window specifications -- #
+
+    own_window yes
+    own_window_type override
+    own_window_transparent yes
+    own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+    border_inner_margin 0
+    border_outer_margin 0
+
+    minimum_size 310 310
+    maximum_width 310
+    
+
+    alignment tr
+    gap_x -20
+    gap_y 20
+
+    # -- Graphics settings -- #
+    draw_shades no
+    draw_outline no
+    draw_borders no
+    draw_graph_borders yes
+
+    # -- Text settings -- #
+    use_xft yes
+    xftfont MaiandraGD:size=24
+    xftalpha 0.4
+
+    uppercase no
+
+    default_color 8b8b8b
+
+         TEXT
+${voffset 33}${font Helvetica LT Std :style=Condensed:size=60}${color 434343}${goto 41}${time %H}${goto 142}${color 434343}${time %M}${font Helvetica LT Std :size=15:style=condensed}${color 808080}${goto 225}${time %S}
+${voffset 15}${color whitesmoke}${font Helvetica LT Std :style=bold:size=9}${alignr 10}${time %a}, ${time %e} ${time %b}  #${time %G}
+${voffset 18}${goto 22}${font Helvetica LT Std :size=8}${color whitesmoke}${execi 600 conkyForecast --location=BRXX0232 --datatype=CN --refetch}
+#${voffset 8}${font Helvetica LT Std :size=10}${color 707070}${goto 24}Бургас
+${voffset -0}${font Helvetica LT Std :size=8}${color whitesmoke}${goto 24}${execi 1800 conkyForecast --location=BRXX0232 --datatype=CT}${voffset -10}${goto 170}${font Helvetica LT Std :size=18}${color d4d4d4}${execi 1800 conkyForecast --location=BRXX0232 -u 
+--datatype=HT}${voffset -12}${font VariShapes Solid :size=8}q${font Helvetica LT Std :size=8}${voffset 0}${execi 3600 conkyForecast --location=SNXX0006 --datatype=LT}${alignr 73}${voffset 10}${font VariShapes Solid :size=8}Q${font Helvetica LT Std :size=8}${execi 3600 conkyForecast --location=SNXX0006 --datatype=HT}${color 707070}
+${voffset 47}${font Helvetica LT Std :size=8}${color white}${goto 25}${execi 600 conkyForecast --location=BRXX0232 --datatype=HT -u --startday=1}/${color 707070}${execi 600 conkyForecast --location=BRXX0232 --datatype=LT -u --startday=1}${font Helvetica LT Std :size=8}${color white}${goto 70}${execi 600 conkyForecast --location=BRXX0232 --datatype=HT -u --startday=2}/${color 707070}${execi 600 conkyForecast --location=BRXX0232 --datatype=LT -u --startday=2}${font Helvetica LT Std :size=8}${color white}${goto 115}${execi 600 conkyForecast --location=BRXX0232 --datatype=HT -u --startday=3}/${color 707070}${execi 600 conkyForecast --location=BRXX0232 --datatype=LT -u --startday=3}${font Helvetica LT Std :size=8}${color white}${goto 160}${execi 600 conkyForecast --location=BRXX0232 --datatype=HT -u --startday=4}/${color 707070}${execi 600 conkyForecast --location=BRXX0232 --datatype=LT -u --startday=4}
+${font Helvetica LT Std :size=8}${color whitesmoke}${goto 25}${execi 600 conkyForecast --location=BRXX0232 --datatype=DW --shortweekday --startday=1}${font Helvetica LT Std :size=8}${color whitesmoke}${goto 70}${execi 600 conkyForecast --location=BRXX0232 --datatype=DW --shortweekday --startday=2}${font Helvetica LT Std :size=8}${color whitesmoke}${goto 115}${execi 600 conkyForecast --location=BRXX0232 --datatype=DW --shortweekday --startday=3}${font Helvetica LT Std :size=8}${color whitesmoke}${goto 160}${execi 600 conkyForecast --location=BRXX0232 --datatype=DW --shortweekday --startday=4}
+${voffset -11}${font Helvetica LT Std :size=8}${color whitesmoke}${goto 205}${execi 600 conkyForecast --location=BRXX0232 --datatype=DW --shortweekday --startday=5}
+${voffset -23}${font Helvetica LT Std :size=8}${color white}${goto 205}${execi 600 conkyForecast --location=BRXX0232 --datatype=HT -u --startday=5}/${color 707070}${execi 600 conkyForecast --location=BRXX0232 --datatype=LT -u --startday=5}
+
+${image ~/.images/base.png -p 0,30 -s 260x145}
+${image ~/.images/base.png -p 0,190 -s 260x45}
+${image ~/.images/flip_bg.png -p 30,10 -s 100x110}
+${image ~/.images/flip_bg.png -p 130,10 -s 100x110}
+${execpi 600 conkyForecast --location=BRXX0232 --template=/home/ton/.vreme.template}
+ 

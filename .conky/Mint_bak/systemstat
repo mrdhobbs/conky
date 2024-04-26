@@ -1,0 +1,61 @@
+conky.config = {
+-- conky package by qaisar nawaz
+-- Conky settings
+background = false,
+update_interval = 6,
+double_buffer = true,
+no_buffers = true,
+
+-- Window specifications
+own_window = true,
+own_window_type = 'normal',
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+own_window_colour = 'black',
+own_window_argb_visual = true,
+own_window_argb_value = 100,
+
+minimum_width = 253,
+minimum_height = 114,
+maximum_width = 253,
+
+-- Alignment
+alignment = 'top_right',
+gap_x = 5,
+gap_y = 348,
+
+border_inner_margin = 15,
+border_outer_margin = 0,
+
+-- Graphics settings
+draw_shades = false,
+draw_outline = false,
+draw_borders = false,
+draw_graph_borders = false,
+
+-- Text settings
+use_xft = true,
+xftalpha = 0,
+font = 'Ubuntu:size=9',
+
+-- Color scheme
+default_color = 'FFFFFF',
+
+color1 = 'bebebe',
+color5 = '006400'
+}
+
+conky.text = [[
+${voffset -2}${font Open Sans Light:bold:size=9}HARD DRIVES$font${voffset 10}
+ROOT ${alignr}${color2}${fs_bar 12,180 /}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${fs_free /} free${color}${font}
+DATA ${alignr}${color2}${fs_bar 12,180 /mnt/Data}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${fs_free /mnt/Data} free${color}${font}
+TOSHIBA ${alignr}${color2}${fs_bar 12,180 /mnt/Toshiba}
+${voffset -18}${offset 5}${font :size=6}${alignr 5}${color1}${fs_free /mnt/Toshiba} free${color}${font}
+${voffset -8}
+${font Open Sans Light:bold:size=9}NETWORK$font${voffset 4}
+${color}Up:${color} ${color1}${upspeed enp3s0}${color}${alignr}${color}Sent:${color} ${color1}${totalup enp3s0}${color}
+${color}Down:${color} ${color1}${downspeed enp3s0}${color}${alignr}${color}Received:${color} ${color1}${totaldown enp3s0}${color}
+${color}External IP Address: ${color1}${alignr}${execi 3600 wget -q -O - checkip.dyndns.org | sed -e 's/[^[:digit:]\|.]//g'}${color}
+Internal IP Address: ${color1}${alignr}${addr enp3s0}${color}${voffset -50}
+]]

@@ -1,0 +1,39 @@
+==============================Instruções=================================
+Depois que você instalou o conky, conkyforecast apenas mova ou copie todos os arquivos e pastas ocultas de "/conky HTChome - ton." para sua pasta de usuário!
+Para ter a tradução do conkyforecast e exibir as informações de tempo em portugues mova a pasta pt_BR para "/usr/share/conkyforecast/locale"
+.
+Pra você ter a previsão do tempo do seu local edite o arquivo .conkyrc. E substitua BRXX0232 pelo código da sua cidade!
+O código da sua cidade pode ser encontrado em http://br.weather.com/
+.
+Para colocar o conky para iniciar junto com o sistema vá até "aplicativos de sessão" e adicione no campo "comando" o arquivo .conky_start.sh
+.
+obs: talvez sejam necessarios alguns ajustes na linha "alignment" do conkyrc dependendo da resolução do seu monitor!
+.
+#importante# Antes do procedimento a seguir faça um backup da pasta usr/share/conkyforecast/images/weathericons 
+.
+Se quiser mudar as imagens padrão do conkyforecast para as do htc-home abra o nautilus como root e copie a pasta weathericons contida no pacote para usr/share/conkyforecast/images/ 
+.
+.
+Boa sorte!_____________________________________________________________
+
+===========================Instructions==================================
+After you install conky, conkyforecast and lm-sensors just move or copy all hidden files e folders from /conky HTChome -  ton. to your user folder!
+for English is not necessary the language folder . Just change it in the file "conkyforecast.config"
+change "pt-BR" for "en".
+.
+For you have the weather forecast of your location edit the file .conkyrc. Overwrite BRXX0232 by the code of your city!
+The code of your city can be found in www.weather.com
+.
+To put conky to start with the system go to "startup applications" and add in the "command" file .conky_start.sh
+.
+p.s.:may be take necessary some adjustments on the line "alignment" of conkyrc depending on the resolution of your monitor!
+.
+#important!# Before the procedure then make a backup of the folder /usr/share/conkyforecast/images/weathericons
+.
+If you want to change the default conkyforecast icons to the htc-home icons open nautilus as root and copy the folder weathericons contained in this package to  usr/share/conkyforecast/images/
+.
+.
+Good luck!_____________________________________________________________
+
+..............................
+Créditos ao Genaro pelo pacote de tradução do conkyforecast! ;)
